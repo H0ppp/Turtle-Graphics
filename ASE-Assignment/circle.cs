@@ -3,10 +3,13 @@ using System.Drawing;
 
 namespace ASE_Assignment {
     class Circle : Shape {
-        int radius;
+        int radius, x, y;
 
         public Circle(Color colour, int x, int y, int radius) {
             this.radius = radius;
+            this.colour = colour;
+            this.x = x;
+            this.y = y;
         }
         public override double calcArea() {
             return Math.PI * (radius ^ 2);

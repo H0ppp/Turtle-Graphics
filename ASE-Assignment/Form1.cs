@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -12,7 +13,6 @@ namespace ASE_Assignment
 {
     public partial class Form1 : Form
     {
-        String command;
         Graphics g;
         public Form1()
         {
@@ -24,6 +24,7 @@ namespace ASE_Assignment
         private void Form1_Load(object sender, EventArgs e)
         {
             g = splitContainer1.Panel1.CreateGraphics(); // init the graphics from the drawing panel and allow the command line to access them.
+            g.Clear(Color.White); // clear the screen
         }
 
         private void _Panel2_Paint(object sender, PaintEventArgs e)
@@ -40,20 +41,16 @@ namespace ASE_Assignment
             
         }
 
-        private void button2_Click(object sender, EventArgs e) //When the "enter" button or key is pressed
-        {
-            command = textBox1.Text; // Copy text out of command box
-            Console.WriteLine(command); // Print to console for logging
-            if (command.Equals("circle"))  // Verify if actual command
-            {
-                Circle c = new Circle(Color.Blue, 0, 0, 6);
-                c.Draw(g);
-            }
-            else
-            {
-                Console.WriteLine("Invalid command!"); // inform user of wrong commmand
-            }
+        private void button2_Click(object sender, EventArgs e) { //When the "enter" button or key is pressed
+
+            Pointer.Instruct(textBox1.Text, g);
+
             textBox1.Text = ""; // empty the text box
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
