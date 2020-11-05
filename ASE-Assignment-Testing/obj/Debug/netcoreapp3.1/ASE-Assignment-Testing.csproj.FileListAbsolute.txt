@@ -1,0 +1,4 @@
+C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment-Testing\obj\Debug\netcoreapp3.1\ASE-Assignment-Testing.csprojAssemblyReference.cache
+C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment-Testing\obj\Debug\netcoreapp3.1\ASE-Assignment-Testing.AssemblyInfoInputs.cache
+C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment-Testing\obj\Debug\netcoreapp3.1\ASE-Assignment-Testing.AssemblyInfo.cs
+C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment-Testing\obj\Debug\netcoreapp3.1\ASE-Assignment-Testing.csproj.CoreCompileInputs.cache

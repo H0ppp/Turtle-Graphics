@@ -5,11 +5,12 @@ namespace ASE_Assignment
 {
 	abstract class Shape
 	{
-		protected Color colour;
+		protected Color colour, penColour;
 		protected int x, y;
 		public Shape()
 		{
 			colour = Color.Red;
+			penColour = Color.Black;
 			x = 100;
 			y = 100;
 		}
@@ -24,9 +25,6 @@ namespace ASE_Assignment
 		public abstract double calcArea();
 		public abstract double calcPerimeter();
 
-		//set is declared as virtual so it can be overridden by a more specific child version
-		//but is here so it can be called by that child version to do the generic stuff
-		//note the use of the param keyword to provide a variable parameter list to cope with some shapes having more setup information than others
 		public virtual void set(Color colour, params int[] list)
 		{
 			this.colour = colour;
