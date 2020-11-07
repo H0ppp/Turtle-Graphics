@@ -12,8 +12,7 @@ namespace ASE_Assignment_Testing
         [TestMethod]
         public void TestMethod1()
         {
-            g = Form1.g;
-            Pointer.Instruct("test", g);
+            Pointer.Instruct("test");
         }
     }
 }

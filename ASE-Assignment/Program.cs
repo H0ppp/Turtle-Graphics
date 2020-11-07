@@ -6,6 +6,9 @@ using System.Windows.Forms;
 
 namespace ASE_Assignment
 {
+    /*
+     * Program: Main class that starts the application
+     */
     static class Program
     {
         /// <summary>
@@ -17,7 +20,7 @@ namespace ASE_Assignment
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new Window());
         }
     }
 }
