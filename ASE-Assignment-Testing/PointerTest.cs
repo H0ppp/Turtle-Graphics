@@ -59,5 +59,20 @@ namespace ASE_Assignment_Testing
             Pointer.Instruct("Incorrect command"); // Execute unknown command
             Assert.IsTrue(l.Text.Contains("Incorrect command")); // Check if invalid command has been added to list of invalids
         }
+        /// <summary>
+        /// TestLoopCommand: Test if the loop command works correctly.
+        /// </summary>
+        [TestMethod]
+        public void TestLoopCommand()
+        {
+            var w = new Window(); // Create window for graphics
+            var p = new PictureBox(); // Create turtle 
+            var l = new Label(); // Create label to satisfy arguments
+            var g = w.CreateGraphics(); // Create graphics from window
+            Pointer.Init(p, g, l); // Initialise point object
+            Pointer.Instruct(""); // Execute loop command
+            // Not yet implemented
+            
+        }
     }
 }
