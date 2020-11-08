@@ -7,7 +7,7 @@ namespace ASE_Assignment
     /*
     * Triangle: Used to instanciate triangle objects with valid parameters
     */
-    class Triangle : Shape
+    public class Triangle : Shape
     {
         PointF[] points; // Variable not included in shape class
 

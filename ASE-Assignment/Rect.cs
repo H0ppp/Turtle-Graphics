@@ -6,7 +6,7 @@ namespace ASE_Assignment
 {    /*
      * Rect: Used to instanciate rectangle objects with valid parameters
      */
-    class Rect : Shape
+    public class Rect : Shape
     {
         int  width, height; // Variables not included in shape
 

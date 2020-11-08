@@ -31,11 +31,14 @@ namespace ASE_Assignment
             String[] commandArray; // The array to store the parts of the command
             Console.WriteLine(command); // Print to console for logging
             commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
+            p.Visible = false;
+            p.Invalidate();
             try
             {
                 if (commandArray[0].Equals("colour", StringComparison.InvariantCultureIgnoreCase))// COLOUR ASSIGNmENT
                 {
                     penColour = Color.FromName(commandArray[1]);
+                    pen.Color = Color.FromName(commandArray[1]);
                 }
                 else if (commandArray[0].Equals("fillcolour", StringComparison.InvariantCultureIgnoreCase)) // FILL COLOUR ASSIGNMENT
                 {
@@ -185,7 +188,7 @@ namespace ASE_Assignment
                 }
                 else if (commandArray[0].Equals("reset", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    Move(12, 12); // move the pointer back to original pos
+                    Move(20, 20); // move the pointer back to original pos
                 }
                 else
                 {
@@ -195,23 +198,26 @@ namespace ASE_Assignment
                 }
 
             }
-            catch (IndexOutOfRangeException e)
+            catch (IndexOutOfRangeException)
             {
                 Console.WriteLine("Not enough arguments were given");
                 label.Text = label.Text + "\n" + command;
 
             }
+            p.Visible = true;
+            p.Invalidate();
         }
 
         static void Move(int x, int y) // Move the turtle to the given X & Y coordinate
         {
-            p.Location = new System.Drawing.Point(x, y); // Assign turtles location to new point
-            p.BackColor = Color.Transparent;
+            p.Location = new System.Drawing.Point(x, y) ; // Assign turtles location to new point
         }
 
         static void Draw(int x, int y, Graphics g) // Draw a line between the current and new positions
-        { 
-            g.DrawLine(pen, p.Location, new System.Drawing.Point(x, y)); // Draw line
+        {
+            Point original = new Point(p.Location.X + (p.Width / 2), p.Location.Y + (p.Height / 2)); // Determine the centre of the Turtle to draw from
+            Point next = new Point(x + (p.Width / 2), y + (p.Height / 2)); // Determine where the centre will be at the new point
+            g.DrawLine(pen, original, next); // Draw line
             Move(x, y); // execute move function
         }
     }

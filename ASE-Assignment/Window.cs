@@ -32,7 +32,8 @@ namespace ASE_Assignment
         {
             g = splitContainer1.Panel1.CreateGraphics(); // init the graphics from the drawing panel and allow the command line to access them.
             g.Clear(Color.White); // clear the screen
-            Pointer.Init(pictureBox1, g, invalidBox); // Initialise the pointer
+            turtle.Parent = splitContainer1.Panel1;
+            Pointer.Init(turtle, g, invalidBox); // Initialise the pointer
         }
 
         private void button2_Click(object sender, EventArgs e) { //When the "enter" button or key is pressed
@@ -86,5 +87,25 @@ namespace ASE_Assignment
             Application.Exit(); // Exit the applciation
         }
 
+        private void executeButton_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine("PROGRAM RAN - INVALID COMMANDS WILL SHOW ERRORS HERE");
+            for (int i = 0; i < commands.Count; i++) // Iterate through command list
+            {
+                Pointer.Instruct(commands[i]); // Run all commands from list
+            }
+        }
+
+        private void clearButton_Click(object sender, EventArgs e)
+        {
+            commands.Clear(); // Empty the Commands list
+            SetCommands("Commands:"); // Reset textbox
+            invalidBox.Text = "Invalid Commands:"; // Reset command box
+        }
+
+        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
+        {
+            //turtle.Invalidate();
+        }
     }
 }

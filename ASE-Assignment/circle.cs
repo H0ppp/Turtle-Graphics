@@ -5,7 +5,7 @@ namespace ASE_Assignment {
     /*
      * Circle: Used to instanciate circle objects with valid parameters
      */
-    class Circle : Shape {
+    public class Circle : Shape {
         int radius; // The only extra variable required from the shape class
 
         public Circle(Color colour,Color penColour, int x, int y, int radius) { // Constructor

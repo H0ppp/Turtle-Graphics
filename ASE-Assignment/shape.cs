@@ -6,7 +6,7 @@ namespace ASE_Assignment
 	/*
 	 * Shape: Basic shape class that is used by other classes for inheritance
 	 */
-	abstract class Shape
+	public abstract class Shape
 	{
 		//Vairables used in all shapes
 		protected Color colour, penColour;

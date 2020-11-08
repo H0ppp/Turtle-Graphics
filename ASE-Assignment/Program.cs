@@ -9,7 +9,7 @@ namespace ASE_Assignment
     /*
      * Program: Main class that starts the application
      */
-    static class Program
+    public static class Program
     {
         /// <summary>
         ///  The main entry point for the application.
