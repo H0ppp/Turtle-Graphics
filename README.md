@@ -28,7 +28,18 @@ clear - clear the screen
 
 reset - reset the position of turtle
 
+## Programming Commands:
+
+var (label) (value) - Assign a custom variable
+
+if (value) (operator) (value) - Compare to variables to perform the following commands
+
+loop - loop the following commands
+
+end - end either the loop of the if statement
+
 ## Function Commands:
+
 clearcommands - clear all commands entered into list
 
 run - Run all commands entered into list.
