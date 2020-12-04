@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "QMdcBAs8IOF6oeThaJH71Rt4MaPHW8BZx3nrfn71MiBzap93E6eCaPrTmDEy2MRrIuUP60LBjwk1M8PpGSz5mg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Jake\\Source\\Repos\\ASE-Assignment\\ASE-Assignment\\ASE-Assignment.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Jake\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x86\\3.1.9\\microsoft.netcore.app.runtime.win-x86.3.1.9.nupkg.sha512",
+    "C:\\Users\\Jake\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x86\\3.1.9\\microsoft.windowsdesktop.app.runtime.win-x86.3.1.9.nupkg.sha512",
+    "C:\\Users\\Jake\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x86\\3.1.9\\microsoft.aspnetcore.app.runtime.win-x86.3.1.9.nupkg.sha512"
+  ],
+  "logs": []
+}

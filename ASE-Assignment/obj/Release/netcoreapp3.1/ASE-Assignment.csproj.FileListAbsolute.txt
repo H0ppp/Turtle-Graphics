@@ -1,0 +1,15 @@
+C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\bin\Release\netcoreapp3.1\ASE-Assignment.exe
+C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\bin\Release\netcoreapp3.1\ASE-Assignment.deps.json
+C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\bin\Release\netcoreapp3.1\ASE-Assignment.runtimeconfig.json
+C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\bin\Release\netcoreapp3.1\ASE-Assignment.runtimeconfig.dev.json
+C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\bin\Release\netcoreapp3.1\ASE-Assignment.dll
+C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\bin\Release\netcoreapp3.1\ASE-Assignment.pdb
+C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\obj\Release\netcoreapp3.1\ASE-Assignment.csprojAssemblyReference.cache
+C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\obj\Release\netcoreapp3.1\ASE_Assignment.Window.resources
+C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\obj\Release\netcoreapp3.1\ASE-Assignment.csproj.GenerateResource.cache
+C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\obj\Release\netcoreapp3.1\ASE-Assignment.AssemblyInfoInputs.cache
+C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\obj\Release\netcoreapp3.1\ASE-Assignment.AssemblyInfo.cs
+C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\obj\Release\netcoreapp3.1\ASE-Assignment.csproj.CoreCompileInputs.cache
+C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\obj\Release\netcoreapp3.1\ASE-Assignment.dll
+C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\obj\Release\netcoreapp3.1\ASE-Assignment.pdb
+C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\obj\Release\netcoreapp3.1\ASE-Assignment.genruntimeconfig.cache

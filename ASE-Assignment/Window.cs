@@ -21,6 +21,9 @@ namespace ASE_Assignment
     {
         public Graphics g;
         List<string> commands = new List<string>();
+        List<string> ifCommands = new List<string>();
+        String[] commandArray;
+        string ifLine;
         public Window()
         {
             SetStyle(ControlStyles.SupportsTransparentBackColor, true); // Allow transparent backgrounds
@@ -39,11 +42,7 @@ namespace ASE_Assignment
         private void button2_Click(object sender, EventArgs e) { //When the "enter" button or key is pressed
             if(textBox1.Text.Equals("run", StringComparison.InvariantCultureIgnoreCase)) // Check if run command entered
             {
-                Console.WriteLine("PROGRAM RAN - INVALID COMMANDS WILL SHOW ERRORS HERE");
-                for (int i = 0; i < commands.Count; i++) // Iterate through command list
-                {
-                    Pointer.Instruct(commands[i]); // Run all commands from list
-                }
+                Execute();
             } else if (textBox1.Text.Equals("clearcommands", StringComparison.InvariantCultureIgnoreCase)) // Check if clear command entered
             {
                 commands.Clear(); // Empty the Commands list
@@ -89,12 +88,125 @@ namespace ASE_Assignment
 
         private void executeButton_Click(object sender, EventArgs e)
         {
+            Execute();
+        }
+
+
+
+        public void Execute()
+        {
             Console.WriteLine("PROGRAM RAN - INVALID COMMANDS WILL SHOW ERRORS HERE");
+            Boolean ifEnabled = false;
             for (int i = 0; i < commands.Count; i++) // Iterate through command list
             {
-                Pointer.Instruct(commands[i]); // Run all commands from list
+                if (ifEnabled && Parser.isEnd(commands[i]) == false)
+                {
+                    ifCommands.Add(commands[i]);
+                    Console.WriteLine("IF added: " + commands[i]);
+                }
+                else if (Parser.isIf(commands[i]))
+                {
+                    ifEnabled = true;
+                    ifLine = commands[i];
+                }
+                else if (ifEnabled && Parser.isEnd(commands[i]))
+                {
+                    ifEnabled = false;
+                    Console.WriteLine("end");
+                    ifChecker(ifLine);
+                }
+                else if (Parser.isVar(commands[i]))
+                {
+
+                }
+                else if (Parser.isLoop(commands[i]))
+                {
+
+                }
+                else
+                {
+                    Pointer.Instruct(commands[i]); // Run all commands from list
+                }
             }
         }
+
+        public void ifChecker(string ifCommand)
+        {
+            commandArray = ifCommand.Split(" ");
+            int x = 0;
+            int y = 0;
+            try
+            {
+                 x = Int32.Parse(commandArray[1]);
+                 y = Int32.Parse(commandArray[3]);
+            } catch (FormatException)
+            {
+                foreach(Variable v in Parser.variableList){
+                    if(commandArray[1].Equals(v.label, StringComparison.InvariantCultureIgnoreCase)){
+                        x = Int32.Parse(v.value);
+                    }
+                    else if (commandArray[3].Equals(v.label, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        y = Int32.Parse(v.value);
+                    }
+                    else
+                    {
+                        Console.Write("No var found");
+                    }
+                }
+            }
+
+            // EQUALS
+            if (commandArray[2].Equals("=", StringComparison.InvariantCultureIgnoreCase))
+            {
+                if(x == y)
+                {
+                    foreach (string i in ifCommands)
+                    {
+                        Pointer.Instruct(i);
+                    }
+                }
+            }
+            // GREATER THAN
+            else if (commandArray[2].Equals(">", StringComparison.InvariantCultureIgnoreCase))
+            {
+                if (x > y)
+                {
+                    foreach (string i in ifCommands)
+                    {
+                        Pointer.Instruct(i);
+                    }
+                }
+            }
+            // LESS THAN
+            else if (commandArray[2].Equals("<", StringComparison.InvariantCultureIgnoreCase))
+            {
+                if (x < y)
+                {
+                    foreach (string i in ifCommands)
+                    {
+                        Pointer.Instruct(i);
+                    }
+                }
+            }
+            // NOT EQUAL
+            else if (commandArray[2].Equals("!=", StringComparison.InvariantCultureIgnoreCase))
+            {
+                if (x != y)
+                {
+                    foreach (string i in ifCommands)
+                    {
+                        Pointer.Instruct(i);
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("If syntax invalid");
+            }
+        }
+
+
 
         private void clearButton_Click(object sender, EventArgs e)
         {
