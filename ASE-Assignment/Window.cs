@@ -138,14 +138,26 @@ namespace ASE_Assignment
             try
             {
                  x = Int32.Parse(commandArray[1]);
-                 y = Int32.Parse(commandArray[3]);
             } catch (FormatException)
             {
                 foreach(Variable v in Parser.variableList){
-                    if(commandArray[1].Equals(v.label, StringComparison.InvariantCultureIgnoreCase)){
+                    if(v.label.Equals(commandArray[1], StringComparison.InvariantCultureIgnoreCase)){
                         x = Int32.Parse(v.value);
+                    } else
+                    {
+                        Console.Write("No var found");
                     }
-                    else if (commandArray[3].Equals(v.label, StringComparison.InvariantCultureIgnoreCase))
+                }
+            }
+            try
+            {
+                y = Int32.Parse(commandArray[3]);
+            }
+            catch (FormatException)
+            {
+                foreach (Variable v in Parser.variableList)
+                {
+                    if (v.label.Equals(commandArray[3], StringComparison.InvariantCultureIgnoreCase))
                     {
                         y = Int32.Parse(v.value);
                     }
