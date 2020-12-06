@@ -20,15 +20,15 @@ namespace ASE_Assignment
     public partial class Window : Form
     {
         public Graphics g;
-        List<string> commands = new List<string>();
-        List<string> ifCommands = new List<string>();
+        List<Command> commands = new List<Command>();
+        List<Command> ifCommands = new List<Command>();
         String[] commandArray;
         string ifLine;
         public Window()
         {
             SetStyle(ControlStyles.SupportsTransparentBackColor, true); // Allow transparent backgrounds
             InitializeComponent();
-            
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -39,11 +39,13 @@ namespace ASE_Assignment
             Pointer.Init(turtle, g, invalidBox); // Initialise the pointer
         }
 
-        private void button2_Click(object sender, EventArgs e) { //When the "enter" button or key is pressed
-            if(textBox1.Text.Equals("run", StringComparison.InvariantCultureIgnoreCase)) // Check if run command entered
+        private void button2_Click(object sender, EventArgs e)
+        { //When the "enter" button or key is pressed
+            if (textBox1.Text.Equals("run", StringComparison.InvariantCultureIgnoreCase)) // Check if run command entered
             {
                 Execute();
-            } else if (textBox1.Text.Equals("clearcommands", StringComparison.InvariantCultureIgnoreCase)) // Check if clear command entered
+            }
+            else if (textBox1.Text.Equals("clearcommands", StringComparison.InvariantCultureIgnoreCase)) // Check if clear command entered
             {
                 commands.Clear(); // Empty the Commands list
                 SetCommands("Commands:"); // Reset textbox
@@ -51,7 +53,11 @@ namespace ASE_Assignment
             }
             else
             {
-                commands.Add(textBox1.Text); // Add command to the list of commands
+                commands.Add(new Command
+                {
+                    line = textBox1.Text,
+                    operation = false
+                }); // Add command to the list of commands
                 SetCommands(commandBox.Text + "\n" + textBox1.Text); // Show command entered on screen
             }
             textBox1.Text = ""; // empty the text box
@@ -60,26 +66,38 @@ namespace ASE_Assignment
 
         private void SetCommands(String command) // Setter for the commands label
         {
-            commandBox.Text = command; 
+            commandBox.Text = command;
         }
 
         private void LoadButton_Clicked(object sender, EventArgs e) //LOAD BUTTON PRESSED
         {
             openFileDialog1.ShowDialog(); // Start the file opener
-            commands = File.ReadAllLines(Path.GetFullPath(openFileDialog1.FileName)).ToList(); // Add each line of the .txt to the commands lsit
-            SetCommands("Commands:"); // Reset textbox
-            for(int i = 0; i < commands.Count; i++) // Iterate through all lines
+            List<string> commandstring = new List<string>();
+            commandstring = File.ReadAllLines(Path.GetFullPath(openFileDialog1.FileName)).ToList(); // Add each line of the .txt to the commands list
+            foreach (string s in commandstring)
             {
-                SetCommands(commandBox.Text + "\n" + commands[i]); // Show opened file on screen
+                commands.Add(new Command
+                {
+                    line = s,
+                    operation = false
+                }); // Add command to the list of commands
+            }
+            SetCommands("Commands:"); // Reset textbox
+            for (int i = 0; i < commands.Count; i++) // Iterate through all lines
+            {
+                SetCommands(commandBox.Text + "\n" + commands[i].line); // Show opened file on screen
             }
 
         }
         private void SaveButton_Clicked(object sender, EventArgs e) // SAVE BUTTON PRESSED
         {
+            List<string> commandstring = new List<string>();
+            foreach (Command c in commands)
+            {
+                commandstring.Add(c.line);
+            }
             saveFileDialog1.ShowDialog(); // Start the file saver
-
-            System.IO.File.WriteAllLines(Path.GetFullPath(saveFileDialog1.FileName), commands); // Write all the commands in the list into individual lines in the txt.
-
+            System.IO.File.WriteAllLines(Path.GetFullPath(saveFileDialog1.FileName), commandstring); // Write all the commands in the list into individual lines in the txt.
         }
         private void quitButton_Clicked(object sender, EventArgs e) // QUIT BUTTON PRESSED
         {
@@ -88,7 +106,7 @@ namespace ASE_Assignment
 
         private void executeButton_Click(object sender, EventArgs e)
         {
-            Execute();
+            Execute(); // Call execute function
         }
 
 
@@ -96,125 +114,184 @@ namespace ASE_Assignment
         public void Execute()
         {
             Console.WriteLine("PROGRAM RAN - INVALID COMMANDS WILL SHOW ERRORS HERE");
-            Boolean ifEnabled = false;
+            Boolean ifEnabled = false; // Check to see if the commands are encapsulated by an if statement
             for (int i = 0; i < commands.Count; i++) // Iterate through command list
             {
-                if (ifEnabled && Parser.isEnd(commands[i]) == false)
+                if (ifEnabled && Parser.isEnd(commands[i].line) == false) // check if command is encapsulated in if statement
                 {
-                    ifCommands.Add(commands[i]);
-                    Console.WriteLine("IF added: " + commands[i]);
+                    operationChecker(commands[i]); // Check if command is operation or not
+                    ifCommands.Add(commands[i]); // add to list of commands in if statement
+                    Console.WriteLine("IF command added: " + commands[i].line); // Data logging
                 }
-                else if (Parser.isIf(commands[i]))
+                else if (Parser.isIf(commands[i].line)) // Check if command is an If statement
                 {
-                    ifEnabled = true;
-                    ifLine = commands[i];
+                    Console.WriteLine("If Began"); // Data Logging
+                    ifEnabled = true; // enable if encapsulation
+                    ifLine = commands[i].line; // Save the line for the syntax checking
+                    commands[i].operation = true;
                 }
-                else if (ifEnabled && Parser.isEnd(commands[i]))
+                else if (ifEnabled && Parser.isEnd(commands[i].line)) // Check if reached end of if statement
                 {
-                    ifEnabled = false;
-                    Console.WriteLine("end");
-                    ifChecker(ifLine);
+                    ifEnabled = false; // disable encapsulation
+                    Console.WriteLine("IF finished"); // data logging
+                    ifChecker(ifLine); // Run ifChecker method to check syntax and outcome of IF statement
                 }
-                else if (Parser.isVar(commands[i]))
+                else if (Parser.isVar(commands[i].line))
                 {
-
+                    Console.WriteLine("VAR modified successfully"); // data logging
+                    commands[i].operation = true;
                 }
-                else if (Parser.isLoop(commands[i]))
+                else if (Parser.isLoop(commands[i].line))
                 {
-
+                    Console.WriteLine("loop began"); // data logging
+                    commands[i].operation = true;
                 }
                 else
                 {
-                    Pointer.Instruct(commands[i]); // Run all commands from list
+                    Pointer.Instruct(commands[i].line); // Command is not an operation or encapsulated by one, run as normal
                 }
             }
         }
 
+        public void operationChecker(Command c) // Check encapsulated commands to see if they are operational or not
+        {
+            commandArray = c.line.Split(" ");
+            if (commandArray[0].Equals("if", StringComparison.InvariantCultureIgnoreCase) || commandArray[0].Equals("loop", StringComparison.InvariantCultureIgnoreCase) || commandArray[0].Equals("var", StringComparison.InvariantCultureIgnoreCase) || commandArray[0].Equals("end", StringComparison.InvariantCultureIgnoreCase))
+            {
+                c.operation = true;
+            }
+        }
         public void ifChecker(string ifCommand)
         {
-            commandArray = ifCommand.Split(" ");
-            int x = 0;
+            commandArray = ifCommand.Split(" ");  // split command into arguments
+            int x = 0; // assign default values
             int y = 0;
+
             try
             {
-                 x = Int32.Parse(commandArray[1]);
-            } catch (FormatException)
-            {
-                foreach(Variable v in Parser.variableList){
-                    if(v.label.Equals(commandArray[1], StringComparison.InvariantCultureIgnoreCase)){
-                        x = Int32.Parse(v.value);
-                    } else
-                    {
-                        Console.Write("No var found");
-                    }
-                }
+                x = Int32.Parse(commandArray[1]); // Try and parse an integer from the argument
             }
-            try
-            {
-                y = Int32.Parse(commandArray[3]);
-            }
-            catch (FormatException)
+            catch (FormatException) // Catch the exception if an int cannot be parsed
             {
                 foreach (Variable v in Parser.variableList)
-                {
-                    if (v.label.Equals(commandArray[3], StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        y = Int32.Parse(v.value);
-                    }
-                    else
-                    {
-                        Console.Write("No var found");
+                { // Iterate through varaible list
+                    if (v.label.Equals(commandArray[1], StringComparison.InvariantCultureIgnoreCase))
+                    { // compare each variable label to the the argument
+                        try
+                        {
+                            x = Int32.Parse(v.value); // Attempt to parse integer from value string, this should not fail.
+                        }
+                        catch (FormatException)
+                        {
+                            Console.WriteLine("Value of variable cannot be defined as a number!");
+                            continue;
+                        }
                     }
                 }
+                Console.WriteLine("No var found"); // Data logging
+                Pointer.label.Text = Pointer.label.Text + "\n" + ifCommand; // Add command to invalid list on screen
+            }
+
+            try
+            {
+                y = Int32.Parse(commandArray[3]); // Try and parse an integer from the argument
+            }
+            catch (FormatException) // Catch the exception if an int cannot be parsed
+            {
+                foreach (Variable v in Parser.variableList) // Iterate through varaible list
+                {
+                    if (v.label.Equals(commandArray[3], StringComparison.InvariantCultureIgnoreCase)) // compare each variable label to the the argument
+                    {
+                        try
+                        {
+                            y = Int32.Parse(v.value); // Attempt to parse integer from value string, this should not fail.
+                        }
+                        catch (FormatException)
+                        {
+                            Console.WriteLine("Value of variable cannot be defined as a number!");
+                            continue;
+                        }
+                    }
+                }
+                Console.Write("No var found"); // Data logging
+                Pointer.label.Text = Pointer.label.Text + "\n" + ifCommand; // Add command to invalid list on screen
             }
 
             // EQUALS
-            if (commandArray[2].Equals("=", StringComparison.InvariantCultureIgnoreCase))
+            if (commandArray[2].Equals("=", StringComparison.InvariantCultureIgnoreCase))  // Check which operator is used
             {
-                if(x == y)
+                if (x == y) // Check if if statement is true
                 {
-                    foreach (string i in ifCommands)
+                    foreach (Command i in ifCommands)
                     {
-                        Pointer.Instruct(i);
+                        if (i.operation)
+                        {
+                            Console.WriteLine("Encap operation function needs calling");
+                        }
+                        else
+                        {
+                            Pointer.Instruct(i.line); // Iterate through commands encapsulated.
+                        }
                     }
                 }
             }
             // GREATER THAN
-            else if (commandArray[2].Equals(">", StringComparison.InvariantCultureIgnoreCase))
+            else if (commandArray[2].Equals(">", StringComparison.InvariantCultureIgnoreCase)) // Check which operator is used
             {
-                if (x > y)
+                if (x > y) // Check if if statement is true
                 {
-                    foreach (string i in ifCommands)
+                    foreach (Command i in ifCommands)
                     {
-                        Pointer.Instruct(i);
+                        if (i.operation)
+                        {
+                            Console.WriteLine("Encap operation function needs calling");
+                        }
+                        else
+                        {
+                            Pointer.Instruct(i.line); // Iterate through commands encapsulated.
+                        }
                     }
                 }
             }
             // LESS THAN
-            else if (commandArray[2].Equals("<", StringComparison.InvariantCultureIgnoreCase))
+            else if (commandArray[2].Equals("<", StringComparison.InvariantCultureIgnoreCase)) // Check which operator is used
             {
-                if (x < y)
+                if (x < y) // Check if if statement is true
                 {
-                    foreach (string i in ifCommands)
+                    foreach (Command i in ifCommands)
                     {
-                        Pointer.Instruct(i);
+                        if (i.operation)
+                        {
+                            Console.WriteLine("Encap operation function needs calling");
+                        }
+                        else
+                        {
+                            Pointer.Instruct(i.line); // Iterate through commands encapsulated.
+                        }
                     }
                 }
             }
             // NOT EQUAL
-            else if (commandArray[2].Equals("!=", StringComparison.InvariantCultureIgnoreCase))
+            else if (commandArray[2].Equals("!=", StringComparison.InvariantCultureIgnoreCase)) // Check which operator is used
             {
-                if (x != y)
+                if (x != y) // Check if if statement is true
                 {
-                    foreach (string i in ifCommands)
+                    foreach (Command i in ifCommands)
                     {
-                        Pointer.Instruct(i);
+                        if (i.operation)
+                        {
+                            Console.WriteLine("Encap operation function needs calling");
+                        }
+                        else
+                        {
+                            Pointer.Instruct(i.line); // Iterate through commands encapsulated.
+                        }
                     }
                 }
             }
             else
             {
-                Console.WriteLine("If syntax invalid");
+                Console.WriteLine("If syntax invalid"); // Post error to console
             }
         }
 
@@ -229,7 +306,6 @@ namespace ASE_Assignment
 
         private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
         {
-            //turtle.Invalidate();
         }
     }
 }

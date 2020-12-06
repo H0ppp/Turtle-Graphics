@@ -14,7 +14,7 @@ namespace ASE_Assignment
         static Graphics g;
         static PictureBox p;
         static Pen pen;
-        static Label label;
+        public static Label label;
         static Color penColour = Color.Black;
         static Color shapeColour = Color.Red;
         static bool fill = true;
