@@ -222,15 +222,17 @@ namespace ASE_Assignment
             {
                 if (x == y) // Check if if statement is true
                 {
-                    foreach (Command i in ifCommands)
+                    foreach (Command i in ifCommands) // iterate through encapsulated commands
                     {
-                        if (i.operation)
+                        if (i.operation) // if command is an operational command
                         {
-                            Console.WriteLine("Encap operation function needs calling");
+                            Parser.isVar(i.line); // check type
+                            Parser.isLoop(i.line);
+                            Parser.isEnd(i.line);
                         }
                         else
                         {
-                            Pointer.Instruct(i.line); // Iterate through commands encapsulated.
+                            Pointer.Instruct(i.line); // Iterate through the drawing commands encapsulated.
                         }
                     }
                 }
@@ -240,15 +242,17 @@ namespace ASE_Assignment
             {
                 if (x > y) // Check if if statement is true
                 {
-                    foreach (Command i in ifCommands)
+                    foreach (Command i in ifCommands) // iterate through encapsulated commands
                     {
-                        if (i.operation)
+                        if (i.operation) // if command is an operational command
                         {
-                            Console.WriteLine("Encap operation function needs calling");
+                            Parser.isVar(i.line); // check type
+                            Parser.isLoop(i.line);
+                            Parser.isEnd(i.line);
                         }
                         else
                         {
-                            Pointer.Instruct(i.line); // Iterate through commands encapsulated.
+                            Pointer.Instruct(i.line); // Iterate through the drawing commands encapsulated.
                         }
                     }
                 }
@@ -258,15 +262,17 @@ namespace ASE_Assignment
             {
                 if (x < y) // Check if if statement is true
                 {
-                    foreach (Command i in ifCommands)
+                    foreach (Command i in ifCommands) // iterate through encapsulated commands
                     {
-                        if (i.operation)
+                        if (i.operation) // if command is an operational command
                         {
-                            Console.WriteLine("Encap operation function needs calling");
+                            Parser.isVar(i.line); // check type
+                            Parser.isLoop(i.line);
+                            Parser.isEnd(i.line);
                         }
                         else
                         {
-                            Pointer.Instruct(i.line); // Iterate through commands encapsulated.
+                            Pointer.Instruct(i.line); // Iterate through the drawing commands encapsulated.
                         }
                     }
                 }
@@ -276,15 +282,17 @@ namespace ASE_Assignment
             {
                 if (x != y) // Check if if statement is true
                 {
-                    foreach (Command i in ifCommands)
+                    foreach (Command i in ifCommands) // iterate through encapsulated commands
                     {
-                        if (i.operation)
+                        if (i.operation) // if command is an operational command
                         {
-                            Console.WriteLine("Encap operation function needs calling");
+                            Parser.isVar(i.line); // check type
+                            Parser.isLoop(i.line);
+                            Parser.isEnd(i.line);
                         }
                         else
                         {
-                            Pointer.Instruct(i.line); // Iterate through commands encapsulated.
+                            Pointer.Instruct(i.line); // Iterate through the drawing commands encapsulated.
                         }
                     }
                 }

@@ -132,6 +132,20 @@ namespace ASE_Assignment
                     }
                     else
                     {
+                        Variable v = Parser.findVar(commandArray[1]);
+                        if (int.TryParse(v.value, out int vradius))
+                        { //See if arg given for radius is valid integer
+                            if (fill) // Fill the circle with the correct colour if fill is enabled
+                            {
+                                Circle c = new Circle(shapeColour, penColour, p.Location.X, p.Location.Y, vradius);
+                                c.Draw(g);
+                            }
+                            else // Else draw transparent circle
+                            {
+                                Circle c = new Circle(Color.Transparent, penColour, p.Location.X, p.Location.Y, vradius);
+                                c.Draw(g);
+                            }
+                        }
                         Console.WriteLine("Invalid argument, expected a number for  circle radius"); // Inform user that there command is incorrect
                         label.Text = label.Text + "\n" + command; // Add command to invalid list on screen
 
