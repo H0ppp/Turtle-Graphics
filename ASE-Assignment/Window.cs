@@ -36,10 +36,10 @@ namespace ASE_Assignment
             g = splitContainer1.Panel1.CreateGraphics(); // init the graphics from the drawing panel and allow the command line to access them.
             g.Clear(Color.White); // clear the screen
             turtle.Parent = splitContainer1.Panel1;
-            Pointer.Init(turtle, g, invalidBox); // Initialise the pointer
+            Pointer.Init(turtle, g, invalidBox, consoleBox); // Initialise the pointer
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Button2_Click(object sender, EventArgs e)
         { //When the "enter" button or key is pressed
             if (textBox1.Text.Equals("run", StringComparison.InvariantCultureIgnoreCase)) // Check if run command entered
             {
@@ -113,37 +113,37 @@ namespace ASE_Assignment
 
         public void Execute()
         {
-            Console.WriteLine("PROGRAM RAN - INVALID COMMANDS WILL SHOW ERRORS HERE");
+            Pointer.ClearConsoleBox();
+            Pointer.AddConsoleBox("PROGRAM RAN");
             Boolean ifEnabled = false; // Check to see if the commands are encapsulated by an if statement
             for (int i = 0; i < commands.Count; i++) // Iterate through command list
             {
-                if (ifEnabled && Parser.isEnd(commands[i].line) == false) // check if command is encapsulated in if statement
+                if (ifEnabled && Parser.IsEnd(commands[i].line) == false) // check if command is encapsulated in if statement
                 {
                     operationChecker(commands[i]); // Check if command is operation or not
                     ifCommands.Add(commands[i]); // add to list of commands in if statement
-                    Console.WriteLine("IF command added: " + commands[i].line); // Data logging
+                    Pointer.AddConsoleBox("IF command added: " + commands[i].line); // Data logging
                 }
-                else if (Parser.isIf(commands[i].line)) // Check if command is an If statement
+                else if (Parser.IsIf(commands[i].line)) // Check if command is an If statement
                 {
-                    Console.WriteLine("If Began"); // Data Logging
+                    Pointer.AddConsoleBox("If Began"); // Data Logging
                     ifEnabled = true; // enable if encapsulation
                     ifLine = commands[i].line; // Save the line for the syntax checking
                     commands[i].operation = true;
                 }
-                else if (ifEnabled && Parser.isEnd(commands[i].line)) // Check if reached end of if statement
+                else if (ifEnabled && Parser.IsEnd(commands[i].line)) // Check if reached end of if statement
                 {
                     ifEnabled = false; // disable encapsulation
-                    Console.WriteLine("IF finished"); // data logging
+                    Pointer.AddConsoleBox("IF finished"); // data logging
                     ifChecker(ifLine); // Run ifChecker method to check syntax and outcome of IF statement
                 }
-                else if (Parser.isVar(commands[i].line))
+                else if (Parser.IsVar(commands[i].line))
                 {
-                    Console.WriteLine("VAR modified successfully"); // data logging
                     commands[i].operation = true;
                 }
-                else if (Parser.isLoop(commands[i].line))
+                else if (Parser.IsLoop(commands[i].line))
                 {
-                    Console.WriteLine("loop began"); // data logging
+                    Pointer.AddConsoleBox("loop began"); // data logging
                     commands[i].operation = true;
                 }
                 else
@@ -175,20 +175,12 @@ namespace ASE_Assignment
             {
                 foreach (Variable v in Parser.variableList)
                 { // Iterate through varaible list
-                    if (v.label.Equals(commandArray[1], StringComparison.InvariantCultureIgnoreCase))
+                    if (v.Label.Equals(commandArray[1], StringComparison.InvariantCultureIgnoreCase))
                     { // compare each variable label to the the argument
-                        try
-                        {
-                            x = Int32.Parse(v.value); // Attempt to parse integer from value string, this should not fail.
-                        }
-                        catch (FormatException)
-                        {
-                            Console.WriteLine("Value of variable cannot be defined as a number!");
-                            continue;
-                        }
+                        x = v.Value;
                     }
                 }
-                Console.WriteLine("No var found"); // Data logging
+                Pointer.AddConsoleBox("ERROR-13: No such variable could be found."); // Data logging
                 Pointer.label.Text = Pointer.label.Text + "\n" + ifCommand; // Add command to invalid list on screen
             }
 
@@ -200,17 +192,9 @@ namespace ASE_Assignment
             {
                 foreach (Variable v in Parser.variableList) // Iterate through varaible list
                 {
-                    if (v.label.Equals(commandArray[3], StringComparison.InvariantCultureIgnoreCase)) // compare each variable label to the the argument
+                    if (v.Label.Equals(commandArray[3], StringComparison.InvariantCultureIgnoreCase)) // compare each variable label to the the argument
                     {
-                        try
-                        {
-                            y = Int32.Parse(v.value); // Attempt to parse integer from value string, this should not fail.
-                        }
-                        catch (FormatException)
-                        {
-                            Console.WriteLine("Value of variable cannot be defined as a number!");
-                            continue;
-                        }
+                        y = v.Value; // Attempt to parse integer from value string, this should not fail.
                     }
                 }
                 Console.Write("No var found"); // Data logging
@@ -226,9 +210,9 @@ namespace ASE_Assignment
                     {
                         if (i.operation) // if command is an operational command
                         {
-                            Parser.isVar(i.line); // check type
-                            Parser.isLoop(i.line);
-                            Parser.isEnd(i.line);
+                            Parser.IsVar(i.line); // check type
+                            Parser.IsLoop(i.line);
+                            Parser.IsEnd(i.line);
                         }
                         else
                         {
@@ -246,9 +230,9 @@ namespace ASE_Assignment
                     {
                         if (i.operation) // if command is an operational command
                         {
-                            Parser.isVar(i.line); // check type
-                            Parser.isLoop(i.line);
-                            Parser.isEnd(i.line);
+                            Parser.IsVar(i.line); // check type
+                            Parser.IsLoop(i.line);
+                            Parser.IsEnd(i.line);
                         }
                         else
                         {
@@ -266,9 +250,9 @@ namespace ASE_Assignment
                     {
                         if (i.operation) // if command is an operational command
                         {
-                            Parser.isVar(i.line); // check type
-                            Parser.isLoop(i.line);
-                            Parser.isEnd(i.line);
+                            Parser.IsVar(i.line); // check type
+                            Parser.IsLoop(i.line);
+                            Parser.IsEnd(i.line);
                         }
                         else
                         {
@@ -286,9 +270,9 @@ namespace ASE_Assignment
                     {
                         if (i.operation) // if command is an operational command
                         {
-                            Parser.isVar(i.line); // check type
-                            Parser.isLoop(i.line);
-                            Parser.isEnd(i.line);
+                            Parser.IsVar(i.line); // check type
+                            Parser.IsLoop(i.line);
+                            Parser.IsEnd(i.line);
                         }
                         else
                         {
@@ -299,11 +283,9 @@ namespace ASE_Assignment
             }
             else
             {
-                Console.WriteLine("If syntax invalid"); // Post error to console
+                Pointer.AddConsoleBox("ERROR-14: If syntax invalid"); // Post error to console
             }
         }
-
-
 
         private void clearButton_Click(object sender, EventArgs e)
         {
@@ -314,6 +296,17 @@ namespace ASE_Assignment
 
         private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
         {
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void clearVars_Click(object sender, EventArgs e)
+        {
+            Parser.ClearVar();
+            Pointer.AddConsoleBox("All Variables Cleared");
         }
     }
 }

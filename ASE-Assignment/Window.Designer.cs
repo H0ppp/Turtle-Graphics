@@ -43,6 +43,7 @@ namespace ASE_Assignment
             this.menuQuit = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.turtle = new System.Windows.Forms.PictureBox();
+            this.clearVars = new System.Windows.Forms.Button();
             this.clearButton = new System.Windows.Forms.Button();
             this.executeButton = new System.Windows.Forms.Button();
             this.invalidBox = new System.Windows.Forms.Label();
@@ -51,6 +52,7 @@ namespace ASE_Assignment
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.consoleBox = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -65,7 +67,7 @@ namespace ASE_Assignment
             this.menuFile});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(850, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1217, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -102,7 +104,9 @@ namespace ASE_Assignment
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(0, 24);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -112,9 +116,11 @@ namespace ASE_Assignment
             this.splitContainer1.Panel1.BackColor = System.Drawing.Color.White;
             this.splitContainer1.Panel1.Controls.Add(this.turtle);
             this.splitContainer1.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel1_Paint);
+            this.splitContainer1.Panel1MinSize = 50;
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.clearVars);
             this.splitContainer1.Panel2.Controls.Add(this.clearButton);
             this.splitContainer1.Panel2.Controls.Add(this.executeButton);
             this.splitContainer1.Panel2.Controls.Add(this.invalidBox);
@@ -122,8 +128,8 @@ namespace ASE_Assignment
             this.splitContainer1.Panel2.Controls.Add(this.button2);
             this.splitContainer1.Panel2.Controls.Add(this.textBox1);
             this.splitContainer1.Panel2MinSize = 20;
-            this.splitContainer1.Size = new System.Drawing.Size(850, 545);
-            this.splitContainer1.SplitterDistance = 321;
+            this.splitContainer1.Size = new System.Drawing.Size(850, 730);
+            this.splitContainer1.SplitterDistance = 500;
             this.splitContainer1.TabIndex = 0;
             this.splitContainer1.Text = "splitContainer1";
             // 
@@ -134,27 +140,40 @@ namespace ASE_Assignment
             this.turtle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.turtle.Cursor = System.Windows.Forms.Cursors.Default;
             this.turtle.ImageLocation = "C:\\Users\\Jake\\Source\\Repos\\ASE-Assignment\\ASE-Assignment\\content\\turtle.png";
-            this.turtle.Location = new System.Drawing.Point(37, 47);
+            this.turtle.Location = new System.Drawing.Point(37, 101);
             this.turtle.Name = "turtle";
             this.turtle.Size = new System.Drawing.Size(3, 3);
             this.turtle.TabIndex = 0;
             this.turtle.TabStop = false;
             // 
+            // clearVars
+            // 
+            this.clearVars.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.clearVars.Location = new System.Drawing.Point(373, 174);
+            this.clearVars.Name = "clearVars";
+            this.clearVars.Size = new System.Drawing.Size(113, 23);
+            this.clearVars.TabIndex = 6;
+            this.clearVars.Text = "Clear Variables";
+            this.clearVars.UseVisualStyleBackColor = true;
+            this.clearVars.Click += new System.EventHandler(this.clearVars_Click);
+            // 
             // clearButton
             // 
-            this.clearButton.Location = new System.Drawing.Point(393, 168);
+            this.clearButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.clearButton.Location = new System.Drawing.Point(373, 145);
             this.clearButton.Name = "clearButton";
-            this.clearButton.Size = new System.Drawing.Size(75, 23);
+            this.clearButton.Size = new System.Drawing.Size(113, 23);
             this.clearButton.TabIndex = 5;
-            this.clearButton.Text = "Clear";
+            this.clearButton.Text = "Clear Commands";
             this.clearButton.UseVisualStyleBackColor = true;
             this.clearButton.Click += new System.EventHandler(this.clearButton_Click);
             // 
             // executeButton
             // 
-            this.executeButton.Location = new System.Drawing.Point(393, 139);
+            this.executeButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.executeButton.Location = new System.Drawing.Point(373, 116);
             this.executeButton.Name = "executeButton";
-            this.executeButton.Size = new System.Drawing.Size(75, 23);
+            this.executeButton.Size = new System.Drawing.Size(113, 23);
             this.executeButton.TabIndex = 4;
             this.executeButton.Text = "Execute";
             this.executeButton.UseVisualStyleBackColor = true;
@@ -182,18 +201,19 @@ namespace ASE_Assignment
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(775, 197);
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.Location = new System.Drawing.Point(775, 202);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 1;
             this.button2.Text = "Enter";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // textBox1
             // 
             this.textBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.textBox1.Location = new System.Drawing.Point(0, 197);
+            this.textBox1.Location = new System.Drawing.Point(0, 203);
             this.textBox1.Name = "textBox1";
             this.textBox1.PlaceholderText = "Enter Command";
             this.textBox1.Size = new System.Drawing.Size(850, 23);
@@ -207,12 +227,24 @@ namespace ASE_Assignment
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // consoleBox
+            // 
+            this.consoleBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.consoleBox.Location = new System.Drawing.Point(856, 24);
+            this.consoleBox.Multiline = true;
+            this.consoleBox.Name = "consoleBox";
+            this.consoleBox.ReadOnly = true;
+            this.consoleBox.Size = new System.Drawing.Size(361, 730);
+            this.consoleBox.TabIndex = 2;
+            this.consoleBox.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            // 
             // Window
             // 
             this.AcceptButton = this.button2;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(850, 569);
+            this.ClientSize = new System.Drawing.Size(1217, 754);
+            this.Controls.Add(this.consoleBox);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -251,6 +283,8 @@ namespace ASE_Assignment
         private Label invalidBox;
         private Button clearButton;
         private Button executeButton;
+        private TextBox consoleBox;
+        private Button clearVars;
     }
 }
 
