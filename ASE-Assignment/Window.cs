@@ -314,6 +314,8 @@ namespace ASE_Assignment
         private void clearButton_Click(object sender, EventArgs e)
         {
             commands.Clear(); // Empty the Commands list
+            ifCommands.Clear();
+            loopCommands.Clear();
             SetCommands("Commands:"); // Reset textbox
             Pointer.ClearInvalidBox(); // Reset command box
         }

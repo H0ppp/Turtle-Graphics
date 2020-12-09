@@ -185,5 +185,26 @@ namespace ASE_Assignment
         {
             variableList.Clear();
         }
+
+        public static bool checkVarInt(String argument, out Int32 result)
+        {
+            Variable v = FindVar(argument);
+            if (int.TryParse(argument, out int intArg))
+            {
+                result = intArg;
+                return true;
+            }
+
+            else if(v != null)
+            {
+                result = v.Value;
+                return true;
+            }
+            else
+            {
+                result = -1;
+                return false;
+            }
+        }
     }
 }

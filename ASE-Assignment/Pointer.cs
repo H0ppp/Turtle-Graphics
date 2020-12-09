@@ -48,7 +48,7 @@ namespace ASE_Assignment
                 }
                 else if (commandArray[0].Equals("triangle", StringComparison.InvariantCultureIgnoreCase)) // TRIANGLE DRAWING
                 {
-                    if (int.TryParse(commandArray[1], out int x2) && int.TryParse(commandArray[2], out int y2) && int.TryParse(commandArray[3], out int x3) && int.TryParse(commandArray[3], out int y3))  // Ensure value given is an integer
+                    if (Parser.checkVarInt(commandArray[1], out int x2) && Parser.checkVarInt(commandArray[2], out int y2) && Parser.checkVarInt(commandArray[3], out int x3) && Parser.checkVarInt(commandArray[3], out int y3))  // Ensure value given is an integer
                     {
 
                         if (fill) // Fill the triangle with the correct colour if fill is enabled
@@ -70,35 +70,27 @@ namespace ASE_Assignment
                     }
                 }
                 else if (commandArray[0].Equals("rectangle", StringComparison.InvariantCultureIgnoreCase))  // RECTANGLE DRAWING
-                { // Verify if actual command and ignore case
-                    if (int.TryParse(commandArray[1], out int width))
-                    { //See if arg given is valid integer
-                        if (int.TryParse(commandArray[2], out int height))
-                        { //See if arg given is valid integer
-                            if (fill) // Fill the rectangle with the correct colour if fill is enabled
-                            {
-                                Rect r = new Rect(shapeColour, penColour, p.Location.X, p.Location.Y, width, height);
-                                r.Draw(g);
-                            }
-                            else // else draw transparent rectangle
-                            {
-                                Rect r = new Rect(Color.Transparent, penColour, p.Location.X, p.Location.Y, width, height);
-                                r.Draw(g);
-                            }
-                        }
-                        else
-                        {
-                            AddConsoleBox("ERROR-02: Invalid argument, expected a number for rectangle height"); // Inform user that there command is incorrect
-                            addInvalidBox(command); // Add command to invalid list on screen
+                {
+                    if (Parser.checkVarInt(commandArray[1], out int width) && Parser.checkVarInt(commandArray[2], out int height))
+                    { //See if arg given for width is valid integer
 
+                        if (fill) // Fill the rectangle with the correct colour if fill is enabled
+                        {
+                            Rect r = new Rect(shapeColour, penColour, p.Location.X, p.Location.Y, width, height);
+                            r.Draw(g);
+                        }
+                        else // else draw transparent rectangle
+                        {
+                            Rect r = new Rect(Color.Transparent, penColour, p.Location.X, p.Location.Y, width, height);
+                            r.Draw(g);
                         }
                     }
                     else
                     {
-                        AddConsoleBox("ERROR-03: Invalid argument, expected a number for rectangle width"); // Inform user that there command is incorrect
+                        AddConsoleBox("ERROR-02: Invalid argument, expected a number or variable for rectangle dimension"); // Inform user that there command is incorrect
                         addInvalidBox(command); // Add command to invalid list on screen
-
                     }
+
                 }
                 else if (commandArray[0].Equals("fill", StringComparison.InvariantCultureIgnoreCase))  // Fill Boolean
                 { // Verify if actual command and ignore case
@@ -119,7 +111,7 @@ namespace ASE_Assignment
 
                 else if (commandArray[0].Equals("circle", StringComparison.InvariantCultureIgnoreCase))  // CIRCLE DRAWING
                 { // Verify if actual command and ignore case
-                    if (int.TryParse(commandArray[1], out int radius))
+                    if (Parser.checkVarInt(commandArray[1], out int radius))
                     { //See if arg given for radius is valid integer
                         if (fill) // Fill the circle with the correct colour if fill is enabled
                         {
@@ -134,27 +126,8 @@ namespace ASE_Assignment
                     }
                     else
                     {
-                        Variable v = Parser.FindVar(commandArray[1]);
-                        if (v != null)
-                        {
-
-                            if (fill) // Fill the circle with the correct colour if fill is enabled
-                            {
-                                Circle c = new Circle(shapeColour, penColour, p.Location.X, p.Location.Y, v.Value);
-                                c.Draw(g);
-                            }
-                            else // Else draw transparent circle
-                            {
-                                Circle c = new Circle(Color.Transparent, penColour, p.Location.X, p.Location.Y, v.Value);
-                                c.Draw(g);
-                            }
-
-                        }
-                        else
-                        {
-                            AddConsoleBox("ERROR-05: Invalid argument, expected a number or variable for circle radius"); // Inform user that there command is incorrect
-                            addInvalidBox(command); // Add command to invalid list on screen
-                        }
+                        AddConsoleBox("ERROR-05: Invalid argument, expected a number or variable for circle radius"); // Inform user that there command is incorrect
+                        addInvalidBox(command); // Add command to invalid list on screen
                     }
                 }
 
@@ -164,48 +137,34 @@ namespace ASE_Assignment
                 }
                 else if (commandArray[0].Equals("moveto", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    if (int.TryParse(commandArray[1], out int newx))
+                    if (Parser.checkVarInt(commandArray[1], out int newx) && Parser.checkVarInt(commandArray[2], out int newy))
                     { //See if arg given for X is valid integer
-                        if (int.TryParse(commandArray[2], out int newy))
-                        { //See if arg given for Y is valid integer
-                            Move(newx, newy);
-                        }
-                        else
-                        {
-                            AddConsoleBox("ERROR-06: Invalid argument, expected a number for move to y co-ord"); // Inform user that there command is incorrect
-                            addInvalidBox(command); // Add command to invalid list on screen
-
-                        }
+                        Move(newx, newy); // BOTH INTS
                     }
                     else
                     {
-                        AddConsoleBox("ERROR-07: Invalid argument, expected a number for move to x co-ord"); // Inform user that there command is incorrect
+
+                        AddConsoleBox("ERROR-07: Invalid argument, expected a number for move to x/y co-ord"); // Inform user that there command is incorrect
                         addInvalidBox(command); // Add command to invalid list on screen
 
                     }
                 }
+
                 else if (commandArray[0].Equals("drawto", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    if (int.TryParse(commandArray[1], out int newx))
-                    { //See if arg given for radius is valid integer
-                        if (int.TryParse(commandArray[2], out int newy))
-                        { //See if arg given for radius is valid integer
-                            Draw(newx, newy, g); // Execute draw function
-                        }
-                        else
-                        {
-                            AddConsoleBox("ERROR-08: Invalid argument, expected a number for draw to y co-ord"); // Inform user that there command is incorrect
-                            addInvalidBox(command); // Add command to invalid list on screen
-
-                        }
+                    if (Parser.checkVarInt(commandArray[1], out int newx) && Parser.checkVarInt(commandArray[2], out int newy))
+                    { //See if arg given for X is valid integer
+                        Draw(newx, newy.g); // BOTH INTS
                     }
                     else
                     {
-                        AddConsoleBox("ERROR-09: Invalid argument, expected a number for draw to x co-ord"); // Inform user that there command is incorrect
+
+                        AddConsoleBox("ERROR-08: Invalid argument, expected a number for draw to x/y co-ord"); // Inform user that there command is incorrect
                         addInvalidBox(command); // Add command to invalid list on screen
 
                     }
                 }
+
                 else if (commandArray[0].Equals("reset", StringComparison.InvariantCultureIgnoreCase))
                 {
                     Move(20, 20); // move the pointer back to original pos
