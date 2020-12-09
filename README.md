@@ -34,7 +34,7 @@ var (label) (value) - Assign a custom variable
 
 if (value) (operator) (value) - Compare to variables to perform the following commands
 
-loop - loop the following commands
+loop (value) (operator) (value) - loop the following commands
 
 end - end either the loop of the if statement
 
