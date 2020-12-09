@@ -58,7 +58,7 @@ namespace ASE_Assignment_Testing
             var l = new Label(); // Create label to satisfy arguments
             var g = w.CreateGraphics(); // Create graphics from window
             var t = new TextBox(); // Create textbox to represent console
-            Pointer.Init(p, g, l,t); // Initialise point object
+            Pointer.Init(p, g, l, t); // Initialise point object
             Pointer.Instruct("Incorrect command"); // Execute unknown command
             Assert.IsTrue(l.Text.Contains("Incorrect command")); // Check if invalid command has been added to list of invalids
         }
@@ -73,10 +73,10 @@ namespace ASE_Assignment_Testing
             var l = new Label(); // Create label to satisfy arguments
             var g = w.CreateGraphics(); // Create graphics from window
             var t = new TextBox(); // Create textbox to represent console
-            Pointer.Init(p, g, l,t); // Initialise point object
+            Pointer.Init(p, g, l, t); // Initialise point object
             Pointer.Instruct(""); // Execute loop command
-            // Not yet implemented
-            
+                                  // Not yet implemented
+
         }
     }
 }

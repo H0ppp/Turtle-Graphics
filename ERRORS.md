@@ -41,3 +41,5 @@ ERROR-16: Neither an integer or variable was given in arguments
 ERROR-17: Variable must already be defined with an int parameter to be modified in this way.
 
 ERROR-18: Variable value must be int.
+
+ERROR-19: Incorrect amount of arguments

@@ -65,7 +65,7 @@ namespace ASE_Assignment
                     else
                     {
                         AddConsoleBox("ERROR-01: One or more triangle co-ordinates given were not valid numbers"); // Inform user that there command is incorrect
-                        label.Text = label.Text + "\n" + command; // Add command to invalid list on screen
+                        addInvalidBox(command); // Add command to invalid list on screen
 
                     }
                 }
@@ -89,14 +89,14 @@ namespace ASE_Assignment
                         else
                         {
                             AddConsoleBox("ERROR-02: Invalid argument, expected a number for rectangle height"); // Inform user that there command is incorrect
-                            label.Text = label.Text + "\n" + command; // Add command to invalid list on screen
+                            addInvalidBox(command); // Add command to invalid list on screen
 
                         }
                     }
                     else
                     {
                         AddConsoleBox("ERROR-03: Invalid argument, expected a number for rectangle width"); // Inform user that there command is incorrect
-                        label.Text = label.Text + "\n" + command; // Add command to invalid list on screen
+                        addInvalidBox(command); // Add command to invalid list on screen
 
                     }
                 }
@@ -113,7 +113,7 @@ namespace ASE_Assignment
                     else
                     {
                         AddConsoleBox("ERROR-04: Invalid argument, expected on/off for fill."); // Inform user that there command is incorrect
-                        label.Text = label.Text + "\n" + command; // Add command to invalid list on screen
+                        addInvalidBox(command); // Add command to invalid list on screen
                     }
                 }
 
@@ -138,22 +138,22 @@ namespace ASE_Assignment
                         if (v != null)
                         {
 
-                                if (fill) // Fill the circle with the correct colour if fill is enabled
-                                {
-                                    Circle c = new Circle(shapeColour, penColour, p.Location.X, p.Location.Y, v.Value);
-                                    c.Draw(g);
-                                }
-                                else // Else draw transparent circle
-                                {
-                                    Circle c = new Circle(Color.Transparent, penColour, p.Location.X, p.Location.Y, v.Value);
-                                    c.Draw(g);
-                                }
-                            
+                            if (fill) // Fill the circle with the correct colour if fill is enabled
+                            {
+                                Circle c = new Circle(shapeColour, penColour, p.Location.X, p.Location.Y, v.Value);
+                                c.Draw(g);
+                            }
+                            else // Else draw transparent circle
+                            {
+                                Circle c = new Circle(Color.Transparent, penColour, p.Location.X, p.Location.Y, v.Value);
+                                c.Draw(g);
+                            }
+
                         }
                         else
                         {
                             AddConsoleBox("ERROR-05: Invalid argument, expected a number or variable for circle radius"); // Inform user that there command is incorrect
-                            label.Text = label.Text + "\n" + command; // Add command to invalid list on screen
+                            addInvalidBox(command); // Add command to invalid list on screen
                         }
                     }
                 }
@@ -173,14 +173,14 @@ namespace ASE_Assignment
                         else
                         {
                             AddConsoleBox("ERROR-06: Invalid argument, expected a number for move to y co-ord"); // Inform user that there command is incorrect
-                            label.Text = label.Text + "\n" + command; // Add command to invalid list on screen
+                            addInvalidBox(command); // Add command to invalid list on screen
 
                         }
                     }
                     else
                     {
                         AddConsoleBox("ERROR-07: Invalid argument, expected a number for move to x co-ord"); // Inform user that there command is incorrect
-                        label.Text = label.Text + "\n" + command; // Add command to invalid list on screen
+                        addInvalidBox(command); // Add command to invalid list on screen
 
                     }
                 }
@@ -195,14 +195,14 @@ namespace ASE_Assignment
                         else
                         {
                             AddConsoleBox("ERROR-08: Invalid argument, expected a number for draw to y co-ord"); // Inform user that there command is incorrect
-                            label.Text = label.Text + "\n" + command; // Add command to invalid list on screen
+                            addInvalidBox(command); // Add command to invalid list on screen
 
                         }
                     }
                     else
                     {
                         AddConsoleBox("ERROR-09: Invalid argument, expected a number for draw to x co-ord"); // Inform user that there command is incorrect
-                        label.Text = label.Text + "\n" + command; // Add command to invalid list on screen
+                        addInvalidBox(command); // Add command to invalid list on screen
 
                     }
                 }
@@ -213,7 +213,7 @@ namespace ASE_Assignment
                 else
                 {
                     AddConsoleBox("ERROR-10: Invalid command!"); // inform user of wrong commmand
-                    label.Text = label.Text + "\n" + command;
+                    addInvalidBox(command);
 
                 }
 
@@ -221,7 +221,7 @@ namespace ASE_Assignment
             catch (IndexOutOfRangeException)
             {
                 AddConsoleBox("ERROR-11: Not enough arguments were given");
-                label.Text = label.Text + "\n" + command;
+                addInvalidBox(command);
 
             }
             p.Visible = true;
@@ -230,7 +230,7 @@ namespace ASE_Assignment
 
         static void Move(int x, int y) // Move the turtle to the given X & Y coordinate
         {
-            p.Location = new System.Drawing.Point(x, y) ; // Assign turtles location to new point
+            p.Location = new System.Drawing.Point(x, y); // Assign turtles location to new point
         }
 
         static void Draw(int x, int y, Graphics g) // Draw a line between the current and new positions
@@ -248,6 +248,16 @@ namespace ASE_Assignment
         public static void ClearConsoleBox()
         {
             consoleBox.Text = "CONSOLE OUTPUT \r\n ------------------- \r\n";
+        }
+
+        public static void addInvalidBox(string line)
+        {
+            label.Text = label.Text + "\r\n" + line;
+        }
+
+        public static void ClearInvalidBox()
+        {
+            consoleBox.Text = "Invalid Commands: \r\n ";
         }
     }
 }

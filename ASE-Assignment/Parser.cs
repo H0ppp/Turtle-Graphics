@@ -29,7 +29,8 @@ namespace ASE_Assignment
                 Variable v = FindVar(commandArray[1]);
                 if (v != null) // See if variable already exists to overwrite
                 {
-                    if (int.TryParse(commandArray[3], out int result)){
+                    if (int.TryParse(commandArray[3], out int result))
+                    {
                         v.Value = result; // overwrite value
                         Pointer.AddConsoleBox("Attempted to overwrite Variable: " + commandArray[1] + " with value: " + commandArray[3]); // Data logging
                         return true;
@@ -37,6 +38,7 @@ namespace ASE_Assignment
                     else
                     {
                         Pointer.AddConsoleBox("ERROR-18: Variable value must be int.");
+                        Pointer.addInvalidBox(command);
                         return true;
                     }
                 }
@@ -55,6 +57,7 @@ namespace ASE_Assignment
                     else
                     {
                         Pointer.AddConsoleBox("ERROR-18: Variable value must be int.");
+                        Pointer.addInvalidBox(command);
                         return true;
                     }
                 }
@@ -62,6 +65,12 @@ namespace ASE_Assignment
             else if (commandArray[0].Equals("var", StringComparison.InvariantCultureIgnoreCase) && (commandArray.Length == 6)) // Check the syntax, [0] VAR, [1] LABEL, [2] equals, [3] VALUE, [4]OPERATOR, [5] NEW VALUE
             {
                 ModifyVar(command);
+                return true;
+            }
+            else if (commandArray[0].Equals("var", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Pointer.AddConsoleBox("ERROR-19: Incorrect amount of arguments");
+                Pointer.addInvalidBox(command);
                 return true;
             }
             else { return false; }
@@ -95,17 +104,18 @@ namespace ASE_Assignment
                 else
                 {
                     Pointer.AddConsoleBox("ERROR-16: Neither an integer or variable was given in arguments");
+                    Pointer.addInvalidBox(command);
                 }
             }
             else
             {
                 Pointer.AddConsoleBox("ERROR-17: Variable must already be defined with an int parameter to be modified in this way."); // Data logging
+                Pointer.addInvalidBox(command);
             }
         }
 
         public static void ComplexModifyVar(int v1, int v2, Variable v, string op)
         {
-            Console.WriteLine(v1 + " "+ v2);
             switch (op)
             {
                 case "+":
@@ -127,7 +137,6 @@ namespace ASE_Assignment
                 default:
                     Pointer.AddConsoleBox("ERROR-15: Operator expected to modify variable");
                     break;
-
             }
         }
 
@@ -146,12 +155,22 @@ namespace ASE_Assignment
         public static bool IsLoop(string command) // Checks to see if command is a LOOP statement
         {
             commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
-            if (commandArray[0].Equals("loop", StringComparison.InvariantCultureIgnoreCase)) // check syntax
+            if (commandArray[0].Equals("loop", StringComparison.InvariantCultureIgnoreCase)) // check syntax [0] loop, [1] var/value, [2] operator, [3] var/value
             {
-                return true;
+                if (commandArray.Length == 4)
+                {
+                    return true;
+                }
+                else
+                {
+                    Pointer.AddConsoleBox("ERROR-19: Incorrect amount of arguments");
+                    Pointer.addInvalidBox(command);
+                    return true;
+                }
             }
             else { return false; }
         }
+
         public static bool IsEnd(string command)
         {
             commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
