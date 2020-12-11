@@ -73,7 +73,7 @@ namespace ASE_Assignment
                     break;
                 default:
                     Pointer.AddConsoleBox("ERROR-15: Operator expected");
-                    Pointer.addInvalidBox(command);
+                    Pointer.AddInvalidBox(command);
                     break;
             }
         }
@@ -117,7 +117,7 @@ namespace ASE_Assignment
                     break;
                 default:
                     Pointer.AddConsoleBox("ERROR-15: Operator expected");
-                    Pointer.addInvalidBox(command);
+                    Pointer.AddInvalidBox(command);
                     break;
             }
         }
@@ -158,7 +158,7 @@ namespace ASE_Assignment
                     break;
                 default:
                     Pointer.AddConsoleBox("ERROR-15: Operator expected");
-                    Pointer.addInvalidBox(command);
+                    Pointer.AddInvalidBox(command);
                     break;
             }
         }

@@ -64,7 +64,7 @@ namespace ASE_Assignment
                     else
                     {
                         Pointer.AddConsoleBox("ERROR-18: Variable value must be int.");
-                        Pointer.addInvalidBox(command);
+                        Pointer.AddInvalidBox(command);
                         return true;
                     }
                 }
@@ -83,7 +83,7 @@ namespace ASE_Assignment
                     else
                     {
                         Pointer.AddConsoleBox("ERROR-18: Variable value must be int.");
-                        Pointer.addInvalidBox(command);
+                        Pointer.AddInvalidBox(command);
                         return true;
                     }
                 }
@@ -96,7 +96,7 @@ namespace ASE_Assignment
             else if (commandArray[0].Equals("var", StringComparison.InvariantCultureIgnoreCase))
             {
                 Pointer.AddConsoleBox("ERROR-19: Incorrect amount of arguments");
-                Pointer.addInvalidBox(command);
+                Pointer.AddInvalidBox(command);
                 return true;
             }
             else { return false; }
@@ -115,7 +115,7 @@ namespace ASE_Assignment
                 else
                 {
                     Pointer.AddConsoleBox("ERROR-19: Method not found");
-                    Pointer.addInvalidBox(command);
+                    Pointer.AddInvalidBox(command);
                 }
                 return true;
             }
@@ -153,13 +153,13 @@ namespace ASE_Assignment
                 else
                 {
                     Pointer.AddConsoleBox("ERROR-16: Neither an integer or variable was given in arguments");
-                    Pointer.addInvalidBox(command);
+                    Pointer.AddInvalidBox(command);
                 }
             }
             else
             {
                 Pointer.AddConsoleBox("ERROR-17: Variable must already be defined with an int parameter to be modified in this way."); // Data logging
-                Pointer.addInvalidBox(command);
+                Pointer.AddInvalidBox(command);
             }
         }
 
@@ -226,7 +226,7 @@ namespace ASE_Assignment
                 else
                 {
                     Pointer.AddConsoleBox("ERROR-19: Incorrect amount of arguments");
-                    Pointer.addInvalidBox(command);
+                    Pointer.AddInvalidBox(command);
                     return true;
                 }
             }

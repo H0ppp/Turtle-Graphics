@@ -63,11 +63,7 @@ namespace ASE_Assignment
                         }
                     }
                     else
-                    {
-                        AddConsoleBox("ERROR-01: One or more triangle co-ordinates given were not valid numbers"); // Inform user that there command is incorrect
-                        addInvalidBox(command); // Add command to invalid list on screen
-
-                    }
+                    { throw new TrianglePosException(command); }
                 }
                 else if (commandArray[0].Equals("rectangle", StringComparison.InvariantCultureIgnoreCase))  // RECTANGLE DRAWING
                 {
@@ -85,11 +81,7 @@ namespace ASE_Assignment
                             r.Draw(g);
                         }
                     }
-                    else
-                    {
-                        AddConsoleBox("ERROR-02: Invalid argument, expected a number or variable for rectangle dimension"); // Inform user that there command is incorrect
-                        addInvalidBox(command); // Add command to invalid list on screen
-                    }
+                    else { throw new RectangleArgsException(command); }
 
                 }
                 else if (commandArray[0].Equals("fill", StringComparison.InvariantCultureIgnoreCase))  // Fill Boolean
@@ -102,11 +94,7 @@ namespace ASE_Assignment
                     {
                         fill = false;
                     }
-                    else
-                    {
-                        AddConsoleBox("ERROR-04: Invalid argument, expected on/off for fill."); // Inform user that there command is incorrect
-                        addInvalidBox(command); // Add command to invalid list on screen
-                    }
+                    else { throw new FillArgsException(command); }
                 }
 
                 else if (commandArray[0].Equals("circle", StringComparison.InvariantCultureIgnoreCase))  // CIRCLE DRAWING
@@ -124,11 +112,7 @@ namespace ASE_Assignment
                             c.Draw(g);
                         }
                     }
-                    else
-                    {
-                        AddConsoleBox("ERROR-05: Invalid argument, expected a number or variable for circle radius"); // Inform user that there command is incorrect
-                        addInvalidBox(command); // Add command to invalid list on screen
-                    }
+                    else { throw new CircleArgsException(command); }
                 }
 
                 else if (commandArray[0].Equals("clear", StringComparison.InvariantCultureIgnoreCase))
@@ -141,48 +125,33 @@ namespace ASE_Assignment
                     { //See if arg given for X is valid integer
                         Move(newx, newy); // BOTH INTS
                     }
-                    else
-                    {
-
-                        AddConsoleBox("ERROR-07: Invalid argument, expected a number for move to x/y co-ord"); // Inform user that there command is incorrect
-                        addInvalidBox(command); // Add command to invalid list on screen
-
-                    }
+                    else { throw new MoveArgsException(command); }
                 }
 
                 else if (commandArray[0].Equals("drawto", StringComparison.InvariantCultureIgnoreCase))
                 {
                     if (Parser.checkVarInt(commandArray[1], out int newx) && Parser.checkVarInt(commandArray[2], out int newy))
                     { //See if arg given for X is valid integer
-                        Draw(newx, newy,g); // BOTH INTS
+                        Draw(newx, newy, g); // BOTH INTS
                     }
-                    else
-                    {
-
-                        AddConsoleBox("ERROR-08: Invalid argument, expected a number for draw to x/y co-ord"); // Inform user that there command is incorrect
-                        addInvalidBox(command); // Add command to invalid list on screen
-
-                    }
+                    else { throw new DrawArgsException(command); }
                 }
 
                 else if (commandArray[0].Equals("reset", StringComparison.InvariantCultureIgnoreCase))
                 {
                     Move(20, 20); // move the pointer back to original pos
                 }
-                else
-                {
-                    AddConsoleBox("ERROR-10: Invalid command!"); // inform user of wrong commmand
-                    addInvalidBox(command);
-
-                }
+                else { throw new InvalidCommandException(command); }
 
             }
             catch (IndexOutOfRangeException)
             {
-                AddConsoleBox("ERROR-11: Not enough arguments were given");
-                addInvalidBox(command);
+                AddConsoleBox("ERROR-08: Not enough arguments were given");
+                AddInvalidBox(command);
 
             }
+            catch (InternalException) { } // Catch any internal exceptions thrown
+
             p.Visible = true;
             p.Invalidate();
         }
@@ -209,7 +178,7 @@ namespace ASE_Assignment
             consoleBox.Text = "CONSOLE OUTPUT \r\n ------------------- \r\n";
         }
 
-        public static void addInvalidBox(string line)
+        public static void AddInvalidBox(string line)
         {
             label.Text = label.Text + "\r\n" + line;
         }
