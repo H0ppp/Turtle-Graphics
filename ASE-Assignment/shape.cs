@@ -3,14 +3,18 @@ using System.Drawing;
 
 namespace ASE_Assignment
 {
-	/*
-	 * Shape: Basic shape class that is used by other classes for inheritance
-	 */
+	/// <summary>
+	/// Shape: Basic shape class that is used by other classes for inheritance
+	/// </summary>
 	public abstract class Shape
 	{
 		//Vairables used in all shapes
 		protected Color colour, penColour;
 		protected int x, y;
+
+		/// <summary>
+		/// Generic shape constructor
+		/// </summary>
 		public Shape()
 		{
 			colour = Color.Red;

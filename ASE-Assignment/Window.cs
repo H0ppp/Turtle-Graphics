@@ -14,9 +14,9 @@ using System.Windows.Forms;
 namespace ASE_Assignment
 {
 
-    /*
-     * Window: This Class manages all interaction from the use with the applciation.
-     */
+    /// <summary>
+    /// Window: This Class manages all interaction from the use with the applciation.
+    /// </summary>
     public partial class Window : Form
     {
         public Graphics g;
@@ -26,13 +26,16 @@ namespace ASE_Assignment
         public static List<Command> methodCommands = new List<Command>();
         String[] commandArray;
         string ifLine, loopLine, currentMethod;
+
+        /// <summary>
+        /// Initalise window object.
+        /// </summary>
         public Window()
         {
             SetStyle(ControlStyles.SupportsTransparentBackColor, true); // Allow transparent backgrounds
             InitializeComponent();
 
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             g = splitContainer1.Panel1.CreateGraphics(); // init the graphics from the drawing panel and allow the command line to access them.
@@ -40,8 +43,12 @@ namespace ASE_Assignment
             turtle.Parent = splitContainer1.Panel1;
             Pointer.Init(turtle, g, invalidBox, consoleBox); // Initialise the pointer
         }
-
-        private void Button2_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Called when enter button is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void enterButton_Click(object sender, EventArgs e)
         { //When the "enter" button or key is pressed
             if (textBox1.Text.Equals("run", StringComparison.InvariantCultureIgnoreCase)) // Check if run command entered
             {
@@ -179,7 +186,7 @@ namespace ASE_Assignment
         }
 
         /// <summary>
-        /// 
+        /// Checks the syntax of if commands
         /// </summary>
         /// <param name="ifCommand"></param>
         public void ifChecker(string ifCommand)
@@ -315,12 +322,19 @@ namespace ASE_Assignment
                 Pointer.AddConsoleBox("ERROR-14: If syntax invalid"); // Post error to console
             }
         }
-
+        /// <summary>
+        /// Sets the text in the command box
+        /// </summary>
+        /// <param name="command"></param>
         private void SetCommands(String command) // Setter for the commands label
         {
             commandBox.Text = command;
         }
-
+        /// <summary>
+        /// Called on load button click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LoadButton_Clicked(object sender, EventArgs e) //LOAD BUTTON PRESSED
         {
             openFileDialog1.ShowDialog(); // Start the file opener
@@ -347,6 +361,11 @@ namespace ASE_Assignment
             }
 
         }
+        /// <summary>
+        /// Called on save button click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SaveButton_Clicked(object sender, EventArgs e) // SAVE BUTTON PRESSED
         {
             List<string> commandstring = new List<string>();
@@ -364,19 +383,35 @@ namespace ASE_Assignment
                 Pointer.AddConsoleBox("ERROR-20: Invalid file path"); // Post error to console
             }
         }
+
+        /// <summary>
+        /// Called when quit button clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void quitButton_Clicked(object sender, EventArgs e) // QUIT BUTTON PRESSED
         {
             Application.Exit(); // Exit the applciation
         }
 
+
+        /// <summary>
+        /// Called when execute button clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void executeButton_Click(object sender, EventArgs e)
         {
             Execute(); // Call execute function
         }
-
+        /// <summary>
+        /// Called when clear button clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void clearButton_Click(object sender, EventArgs e)
         {
-            commands.Clear(); // Empty the Commands list
+            commands.Clear(); // Empty the Commands lists
             ifCommands.Clear();
             loopCommands.Clear();
             methodCommands.Clear();
@@ -389,31 +424,46 @@ namespace ASE_Assignment
         {
         }
 
+        /// <summary>
+        /// Called when clear method clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void clearMethod_Click(object sender, EventArgs e)
         {
+            Parser.ClearMethods();
             Pointer.AddConsoleBox("All Methods Cleared");
         }
 
-        private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
+        /// <summary>
+        /// Called when clear screen clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void clearScreen_Click(object sender, EventArgs e)
         {
-            g.Clear(Color.White);
+            g.Clear(Color.White); // Set background colour to white
             Pointer.AddConsoleBox("Screen Cleared");
+        }
+
+        /// <summary>
+        /// Called when clear variables is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void clearVars_Click(object sender, EventArgs e)
+        {
+            Parser.ClearVar(); // Clear variables list
+            Pointer.AddConsoleBox("All Variables Cleared");
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
 
         }
-
-        private void clearVars_Click(object sender, EventArgs e)
+        private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
         {
-            Parser.ClearVar();
-            Pointer.AddConsoleBox("All Variables Cleared");
+
         }
     }
 }

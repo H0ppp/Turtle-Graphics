@@ -2,13 +2,15 @@
 namespace ASE_Assignment
 {
     /// <summary>
-    /// Exception thrown if triangle command does not receive integers or variables
+    /// All exceptions are based off of this to allow catching of internal exceptions but not software breaking ones.
     /// </summary>
-    /// 
     class InternalException : Exception
     {
 
     }
+    /// <summary>
+    /// Exception thrown if triangle command does not receive integers or variables
+    /// </summary>
     class TrianglePosException : InternalException
     {
         public TrianglePosException(string command)

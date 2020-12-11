@@ -4,14 +4,25 @@ using ASE_Assignment;
 
 namespace ASE_Assignment
 {
-    /*
-    * Triangle: Used to instanciate triangle objects with valid parameters
-    */
+    /// <summary>
+    /// Triangle: Used to instanciate triangle objects with valid parameters
+    /// </summary>
     public class Triangle : Shape
     {
         PointF[] points; // Variable not included in shape class
 
-        public Triangle(Color colour, Color penColour, int x, int y, int x2, int y2, int x3, int y3) // Constructor
+        /// <summary>
+        /// Triangle object constructor
+        /// </summary>
+        /// <param name="colour">Fill colour</param>
+        /// <param name="penColour">Outline colour</param>
+        /// <param name="x">X1 Location</param>
+        /// <param name="y">Y1 Location</param>
+        /// <param name="x2">Point 2 X</param>
+        /// <param name="y2">Point 2 Y</param>
+        /// <param name="x3">Point 3 X</param>
+        /// <param name="y3">Point 3 Y</param>
+        public Triangle(Color colour, Color penColour, int x, int y, int x2, int y2, int x3, int y3)
         {
             this.colour = colour;
             this.penColour = penColour;
@@ -32,6 +43,10 @@ namespace ASE_Assignment
             return 0; // NEEDS IMPLEMENTING
         }
 
+        /// <summary>
+        /// Draw given triangle onto a panel
+        /// </summary>
+        /// <param name="g">Graphics panel to draw onto</param>
         public override void Draw(Graphics g)
         {
             Pen p = new Pen(penColour, 2); // Create new pen based on colour assigned by user

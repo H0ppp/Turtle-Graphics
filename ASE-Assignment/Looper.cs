@@ -3,7 +3,7 @@ using System;
 namespace ASE_Assignment
 {
     /// <summary>
-    /// 
+    /// Class that manages loop functions
     /// </summary>
 	public class Looper
     {

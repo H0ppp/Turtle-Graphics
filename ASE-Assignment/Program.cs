@@ -6,9 +6,9 @@ using System.Windows.Forms;
 
 namespace ASE_Assignment
 {
-    /*
-     * Program: Main class that starts the application
-     */
+    /// <summary>
+    /// Program: Main class that starts the application
+    /// </summary>
     public static class Program
     {
         /// <summary>

@@ -3,24 +3,29 @@ using System.Collections.Generic;
 
 namespace ASE_Assignment
 {
-    /*
-	 * Parser: Class parses all operation commands such as IF, VAR, LOOP, END.
-	*/
+    /// <summary>
+    /// Parser: Class parses all operation commands such as IF, VAR, LOOP, METHOD, END.
+    /// </summary>
     public class Parser
     {
         static string[] commandArray; // Array of command pieces
         public static List<Variable> variableList = new List<Variable>(); // List of all variables assigned in current runtime
-        public static List<Method> methodList = new List<Method>();
+        public static List<Method> methodList = new List<Method>(); // List of all methods created in current runtime
 
-
+        /// <summary>
+        /// Check if command is a method and method already exists
+        /// </summary>
+        /// <param name="command">The command entered</param>
+        /// <param name="methodName">Output the existing method or creates new one</param>
+        /// <returns>Syntax validity of method command</returns>
         public static bool IsMethod(string command, out string methodName)
         {
             commandArray = command.Split(" ");
 
             if (commandArray[0].Equals("method", StringComparison.InvariantCultureIgnoreCase) && (commandArray.Length == 2))
             {
-                Method m = FindMethod(commandArray[1]);
-                if(m == null)
+                Method m = FindMethod(commandArray[1]); // Find method
+                if(m == null) // If method not found
                 {
                     methodList.Add(new Method
                     {
@@ -28,15 +33,20 @@ namespace ASE_Assignment
                     }); // Add the new method to the method list
                     Pointer.AddConsoleBox("Created new method: " + commandArray[1]); // Data logging
                 }
-                methodName = commandArray[1];
+                methodName = commandArray[1]; // Return with method name
                 return true;
             }
-            else
+            else // Invalid syntax
             {
                 methodName = null;
                 return false;
             }
         }
+        /// <summary>
+        /// Check if command is a valid if statement.
+        /// </summary>
+        /// <param name="command">The command entered</param>
+        /// <returns>Syntax validity of if command</returns>
         public static bool IsIf(string command) // Checks to see if command is an IF statement
         {
             commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
@@ -47,6 +57,12 @@ namespace ASE_Assignment
             }
             else { return false; }
         }
+
+        /// <summary>
+        /// Checks syntax and creates or modifys variable
+        /// </summary>
+        /// <param name="command">The command entered</param>
+        /// <returns>Syntax validity of var command</returns>
         public static bool IsVar(string command) // Checks to see if command is a VAR statement
         {
             commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
@@ -102,6 +118,11 @@ namespace ASE_Assignment
             else { return false; }
         }
 
+        /// <summary>
+        /// See if command entered is a run function and process it accordingly
+        /// </summary>
+        /// <param name="command">The command entered</param>
+        /// <returns>Syntax validity of runMethod command</returns>
         public static bool IsRunMethod(string command)
         {
             commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
@@ -124,7 +145,10 @@ namespace ASE_Assignment
                 return false;
             }
         }
-
+        /// <summary>
+        /// Syntax parsing method for modifcation of variable values
+        /// </summary>
+        /// <param name="command">The command entered</param>
         public static void ModifyVar(string command)
         {
             commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
@@ -162,7 +186,13 @@ namespace ASE_Assignment
                 Pointer.AddInvalidBox(command);
             }
         }
-
+        /// <summary>
+        /// Method for the modification of variables values with data passed from ModifyVar function
+        /// </summary>
+        /// <param name="v1">Integer 1</param>
+        /// <param name="v2">Integer 2</param>
+        /// <param name="v">The variable being modified</param>
+        /// <param name="op">Numerical operator to use in equation</param>
         public static void ComplexModifyVar(int v1, int v2, Variable v, string op)
         {
             switch (op)
@@ -188,20 +218,28 @@ namespace ASE_Assignment
                     break;
             }
         }
-
+        /// <summary>
+        /// Method for finding existing variable from variableList
+        /// </summary>
+        /// <param name="s">Variable name</param>
+        /// <returns>Variable found</returns>
         public static Variable FindVar(string s) // Find a variable with the given label to determine if it exists
         {
             foreach (Variable v in variableList)
             {
                 if (v.Label.Equals(s, StringComparison.InvariantCultureIgnoreCase)) // Check if var already exists
                 {
-                    return v;
+                    return v; 
                 }
             }
             return null;
         }
 
-
+        /// <summary>
+        /// Function for finding existing method from variableList
+        /// </summary>
+        /// <param name="s">Method name</param>
+        /// <returns>Method found</returns>
         public static Method FindMethod(string s) // Find a variable with the given label to determine if it exists
         {
             foreach (Method m in methodList)
@@ -213,7 +251,11 @@ namespace ASE_Assignment
             }
             return null;
         }
-
+        /// <summary>
+        /// Checks loop command syntax
+        /// </summary>
+        /// <param name="command">The command entered</param>
+        /// <returns>Syntax validity of loop command</returns>
         public static bool IsLoop(string command) // Checks to see if command is a LOOP statement
         {
             commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
@@ -232,7 +274,11 @@ namespace ASE_Assignment
             }
             else { return false; }
         }
-
+        /// <summary>
+        /// Checks for end command
+        /// </summary>
+        /// <param name="command">Command entered</param>
+        /// <returns>Syntax validity</returns>
         public static bool IsEndIf(string command)
         {
             commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
@@ -242,6 +288,11 @@ namespace ASE_Assignment
             }
             else { return false; }
         }
+        /// <summary>
+        /// Checks for end command
+        /// </summary>
+        /// <param name="command">Command entered</param>
+        /// <returns>Syntax validity</returns>
         public static bool IsEndLoop(string command)
         {
             commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
@@ -251,6 +302,11 @@ namespace ASE_Assignment
             }
             else { return false; }
         }
+        /// <summary>
+        /// Checks for end command
+        /// </summary>
+        /// <param name="command">Command entered</param>
+        /// <returns>Syntax validity</returns>
         public static bool IsEndMethod(string command)
         {
             commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
@@ -261,17 +317,26 @@ namespace ASE_Assignment
             else { return false; }
         }
 
-
+        /// <summary>
+        /// Clears the variable list
+        /// </summary>
         public static void ClearVar()
         {
             variableList.Clear();
         }
-
+        /// <summary>
+        /// Clears the method list
+        /// </summary>
         public static void ClearMethods()
         {
             methodList.Clear();
         }
-
+        /// <summary>
+        /// Function derived from Int.tryParse. Checks if string is either integer or an existing variable
+        /// </summary>
+        /// <param name="argument">The string to check</param>
+        /// <param name="result">Output the integer or variable value</param>
+        /// <returns>Possibility of finding integer</returns>
         public static bool checkVarInt(String argument, out Int32 result)
         {
             Variable v = FindVar(argument);

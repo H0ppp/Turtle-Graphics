@@ -6,9 +6,9 @@ using System.Windows.Forms;
 
 namespace ASE_Assignment
 {
-    /*
-     * Pointer: This class parses the commands given by the user and instructs the turtle pointer how to react accordingly.
-     */
+    /// <summary>
+    /// Pointer: This class parses the commands given by the user and instructs the turtle pointer how to react accordingly.
+    /// </summary>
     public class Pointer
     {
         static Graphics g;
@@ -19,6 +19,13 @@ namespace ASE_Assignment
         static Color penColour = Color.Black;
         static Color shapeColour = Color.Red;
         static bool fill = true;
+        /// <summary>
+        /// Initialises the pointer object.
+        /// </summary>
+        /// <param name="picture">The pointer on the graphics screen</param>
+        /// <param name="graphics">The graphics screen itself</param>
+        /// <param name="invalid">Invalid commands box</param>
+        /// <param name="cb">Console output box.</param>
         public static void Init(PictureBox picture, Graphics graphics, Label invalid, TextBox cb) //Initial assignment of external objects to allow interaction
         {
             p = picture; // Assign the turtle object.
@@ -27,7 +34,10 @@ namespace ASE_Assignment
             pen = new Pen(penColour); // Set default pen colour
             g = graphics; // Graphics controller from split container (The drawing area)
         }
-
+        /// <summary>
+        /// Function for parsing commands through the pointer.
+        /// </summary>
+        /// <param name="command">The command to parse.</param>
         public static void Instruct(String command)  // Parse the commands given
         {
             String[] commandArray; // The array to store the parts of the command
@@ -40,7 +50,7 @@ namespace ASE_Assignment
                 if (commandArray[0].Equals("colour", StringComparison.InvariantCultureIgnoreCase))// COLOUR ASSIGNmENT
                 {
                     penColour = Color.FromName(commandArray[1]);
-                    pen.Color = Color.FromName(commandArray[1]);
+                    pen.Color = penColour;
                 }
                 else if (commandArray[0].Equals("fillcolour", StringComparison.InvariantCultureIgnoreCase)) // FILL COLOUR ASSIGNMENT
                 {
@@ -155,12 +165,21 @@ namespace ASE_Assignment
             p.Visible = true;
             p.Invalidate();
         }
-
+        /// <summary>
+        /// Move the pointer to the given co-ord
+        /// </summary>
+        /// <param name="x">X Position</param>
+        /// <param name="y">Y Position</param>
         static void Move(int x, int y) // Move the turtle to the given X & Y coordinate
         {
             p.Location = new System.Drawing.Point(x, y); // Assign turtles location to new point
         }
-
+        /// <summary>
+        /// Draw a line from the pointer to the co-ord given.
+        /// </summary>
+        /// <param name="x">X Postion</param>
+        /// <param name="y">Y Position</param>
+        /// <param name="g">Graphics panel to draw the line on</param>
         static void Draw(int x, int y, Graphics g) // Draw a line between the current and new positions
         {
             Point original = new Point(p.Location.X + (p.Width / 2), p.Location.Y + (p.Height / 2)); // Determine the centre of the Turtle to draw from
@@ -168,21 +187,32 @@ namespace ASE_Assignment
             g.DrawLine(pen, original, next); // Draw line
             Move(x, y); // execute move function
         }
+        /// <summary>
+        /// Adds a line to the console box
+        /// </summary>
+        /// <param name="line">Adds a line to the console box.</param>
         public static void AddConsoleBox(string line)
         {
             consoleBox.Text = consoleBox.Text + "\r\n" + line;
         }
-
+        /// <summary>
+        /// Clears the console box
+        /// </summary>
         public static void ClearConsoleBox()
         {
             consoleBox.Text = "CONSOLE OUTPUT \r\n ------------------- \r\n";
         }
-
+        /// <summary>
+        /// Adds a line to the invalid command box.
+        /// </summary>
+        /// <param name="line">The line to add to the text box</param>
         public static void AddInvalidBox(string line)
         {
             label.Text = label.Text + "\r\n" + line;
         }
-
+        /// <summary>
+        /// Clears the invalid command box
+        /// </summary>
         public static void ClearInvalidBox()
         {
             label.Text = "Invalid Commands: \r\n ";

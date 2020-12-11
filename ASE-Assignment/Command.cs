@@ -1,8 +1,8 @@
 namespace ASE_Assignment
 {
-    /*
-	 * Variable: Object variable containing label and value.
-	*/
+    /// <summary>
+    /// Command: Command object containing line and type.
+    /// </summary>
     public class Command
     {
         public string line { get; set; }

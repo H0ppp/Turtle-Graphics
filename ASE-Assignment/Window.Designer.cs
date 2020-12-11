@@ -43,18 +43,18 @@ namespace ASE_Assignment
             this.menuQuit = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.turtle = new System.Windows.Forms.PictureBox();
+            this.clearScreen = new System.Windows.Forms.Button();
             this.clearMethod = new System.Windows.Forms.Button();
             this.clearVars = new System.Windows.Forms.Button();
             this.clearButton = new System.Windows.Forms.Button();
             this.executeButton = new System.Windows.Forms.Button();
             this.invalidBox = new System.Windows.Forms.Label();
             this.commandBox = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.enterButton = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.consoleBox = new System.Windows.Forms.TextBox();
-            this.clearScreen = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -129,7 +129,7 @@ namespace ASE_Assignment
             this.splitContainer1.Panel2.Controls.Add(this.executeButton);
             this.splitContainer1.Panel2.Controls.Add(this.invalidBox);
             this.splitContainer1.Panel2.Controls.Add(this.commandBox);
-            this.splitContainer1.Panel2.Controls.Add(this.button2);
+            this.splitContainer1.Panel2.Controls.Add(this.enterButton);
             this.splitContainer1.Panel2.Controls.Add(this.textBox1);
             this.splitContainer1.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel2_Paint);
             this.splitContainer1.Panel2MinSize = 20;
@@ -150,6 +150,17 @@ namespace ASE_Assignment
             this.turtle.Size = new System.Drawing.Size(3, 3);
             this.turtle.TabIndex = 0;
             this.turtle.TabStop = false;
+            // 
+            // clearScreen
+            // 
+            this.clearScreen.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.clearScreen.Location = new System.Drawing.Point(373, 174);
+            this.clearScreen.Name = "clearScreen";
+            this.clearScreen.Size = new System.Drawing.Size(113, 23);
+            this.clearScreen.TabIndex = 8;
+            this.clearScreen.Text = "Clear Screen";
+            this.clearScreen.UseVisualStyleBackColor = true;
+            this.clearScreen.Click += new System.EventHandler(this.clearScreen_Click);
             // 
             // clearMethod
             // 
@@ -215,16 +226,16 @@ namespace ASE_Assignment
             this.commandBox.TabIndex = 2;
             this.commandBox.Text = "Commands:";
             // 
-            // button2
+            // enterButton
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(775, 202);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Enter";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.Button2_Click);
+            this.enterButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.enterButton.Location = new System.Drawing.Point(775, 202);
+            this.enterButton.Name = "enterButton";
+            this.enterButton.Size = new System.Drawing.Size(75, 23);
+            this.enterButton.TabIndex = 1;
+            this.enterButton.Text = "Enter";
+            this.enterButton.UseVisualStyleBackColor = true;
+            this.enterButton.Click += new System.EventHandler(this.enterButton_Click);
             // 
             // textBox1
             // 
@@ -254,20 +265,9 @@ namespace ASE_Assignment
             this.consoleBox.TabIndex = 2;
             this.consoleBox.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
-            // clearScreen
-            // 
-            this.clearScreen.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.clearScreen.Location = new System.Drawing.Point(373, 174);
-            this.clearScreen.Name = "clearScreen";
-            this.clearScreen.Size = new System.Drawing.Size(113, 23);
-            this.clearScreen.TabIndex = 8;
-            this.clearScreen.Text = "Clear Screen";
-            this.clearScreen.UseVisualStyleBackColor = true;
-            this.clearScreen.Click += new System.EventHandler(this.clearScreen_Click);
-            // 
             // Window
             // 
-            this.AcceptButton = this.button2;
+            this.AcceptButton = this.enterButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1217, 754);
@@ -297,7 +297,7 @@ namespace ASE_Assignment
 
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button enterButton;
         private System.Windows.Forms.PictureBox turtle;
         private SaveFileDialog saveFileDialog1;
         private OpenFileDialog openFileDialog1;
