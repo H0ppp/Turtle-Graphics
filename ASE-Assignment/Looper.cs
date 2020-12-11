@@ -45,37 +45,39 @@ namespace ASE_Assignment
         /// <param name="command">The command containing the loop.</param>
         public static void LoopParse(int v1, int v2, string op, string command)
         {
-            switch (op)
+            try
             {
-                case "=":
-                    while (v1 == v2)
-                    {
-                        LoopRun();
-                    }
-                    break;
-                case ">":
-                    while (v1 > v2)
-                    {
-                        LoopRun();
-                    }
-                    break;
-                case "<":
-                    while (v1 < v2)
-                    {
-                        LoopRun();
-                    }
-                    break;
-                case "!=":
-                    while (v1 != v2)
-                    {
-                        LoopRun();
-                    }
-                    break;
-                default:
-                    Pointer.AddConsoleBox("ERROR-15: Operator expected");
-                    Pointer.AddInvalidBox(command);
-                    break;
+                switch (op)
+                {
+                    case "=":
+                        while (v1 == v2)
+                        {
+                            LoopRun();
+                        }
+                        break;
+                    case ">":
+                        while (v1 > v2)
+                        {
+                            LoopRun();
+                        }
+                        break;
+                    case "<":
+                        while (v1 < v2)
+                        {
+                            LoopRun();
+                        }
+                        break;
+                    case "!=":
+                        while (v1 != v2)
+                        {
+                            LoopRun();
+                        }
+                        break;
+                    default:
+                        throw new InvalidOperatorException();
+                }
             }
+            catch (InvalidOperatorException) { }
         }
         /// <summary>
         /// 
@@ -86,40 +88,42 @@ namespace ASE_Assignment
         /// <param name="command"></param>
         public static void LoopParse(Variable v1, int v2, string op, string command)
         {
-            Console.WriteLine(v1.Value);
-            Console.WriteLine(v2);
-            Console.WriteLine(op);
-            switch (op)
+            try
             {
-                case "=":
-                    while (v1.Value == v2)
-                    {
-                        LoopRun();
-                    }
-                    break;
-                case ">":
-                    while (v1.Value > v2)
-                    {
-                        LoopRun();
-                    }
-                    break;
-                case "<":
-                    while (v1.Value < v2)
-                    {
-                        LoopRun();
-                    }
-                    break;
-                case "!=":
-                    while (v1.Value != v2)
-                    {
-                        LoopRun();
-                    }
-                    break;
-                default:
-                    Pointer.AddConsoleBox("ERROR-15: Operator expected");
-                    Pointer.AddInvalidBox(command);
-                    break;
+                Console.WriteLine(v1.Value);
+                Console.WriteLine(v2);
+                Console.WriteLine(op);
+                switch (op)
+                {
+                    case "=":
+                        while (v1.Value == v2)
+                        {
+                            LoopRun();
+                        }
+                        break;
+                    case ">":
+                        while (v1.Value > v2)
+                        {
+                            LoopRun();
+                        }
+                        break;
+                    case "<":
+                        while (v1.Value < v2)
+                        {
+                            LoopRun();
+                        }
+                        break;
+                    case "!=":
+                        while (v1.Value != v2)
+                        {
+                            LoopRun();
+                        }
+                        break;
+                    default:
+                        throw new InvalidOperatorException();
+                }
             }
+            catch (InvalidOperatorException) { }
         }
         /// <summary>
         /// 
@@ -130,37 +134,39 @@ namespace ASE_Assignment
         /// <param name="command"></param>
         public static void LoopParse(Variable v1, Variable v2, string op, string command)
         {
-            switch (op)
+            try
             {
-                case "=":
-                    while (v1.Value == v2.Value)
-                    {
-                        LoopRun();
-                    }
-                    break;
-                case ">":
-                    while (v1.Value > v2.Value)
-                    {
-                        LoopRun();
-                    }
-                    break;
-                case "<":
-                    while (v1.Value < v2.Value)
-                    {
-                        LoopRun();
-                    }
-                    break;
-                case "!=":
-                    while (v1.Value != v2.Value)
-                    {
-                        LoopRun();
-                    }
-                    break;
-                default:
-                    Pointer.AddConsoleBox("ERROR-15: Operator expected");
-                    Pointer.AddInvalidBox(command);
-                    break;
+                switch (op)
+                {
+                    case "=":
+                        while (v1.Value == v2.Value)
+                        {
+                            LoopRun();
+                        }
+                        break;
+                    case ">":
+                        while (v1.Value > v2.Value)
+                        {
+                            LoopRun();
+                        }
+                        break;
+                    case "<":
+                        while (v1.Value < v2.Value)
+                        {
+                            LoopRun();
+                        }
+                        break;
+                    case "!=":
+                        while (v1.Value != v2.Value)
+                        {
+                            LoopRun();
+                        }
+                        break;
+                    default:
+                        throw new InvalidOperatorException();
+                }
             }
+            catch (InvalidOperatorException) { }
         }
 
 

@@ -81,8 +81,78 @@ namespace ASE_Assignment
     {
         public InvalidCommandException(string command)
         {
-            Pointer.AddConsoleBox("ERROR-07: Invalid command!"); // Inform user that there command is incorrect
+            Pointer.AddConsoleBox("ERROR-07: Invalid command"); // Inform user that there command is incorrect
             Pointer.AddInvalidBox(command); // Add command to invalid list on screen
+        }
+    }
+
+    /*
+     * Error 08 Is an IndexOutOfRangeException so does not need implementing
+     */
+
+    /// <summary>
+    /// Exception thrown when a variable does not exist
+    /// </summary>
+    class NoSuchVariableException : InternalException
+    {
+        public NoSuchVariableException(string command)
+        {
+            Pointer.AddConsoleBox("ERROR-09: No such variable could be found"); // Inform user that there command is incorrect
+            Pointer.AddInvalidBox(command); // Add command to invalid list on screen
+        }
+    }
+    /// <summary>
+    /// Exception thrown when if syntax is incorrect
+    /// </summary>
+    class IfSyntaxException : InternalException
+    {
+        public IfSyntaxException(string command)
+        {
+            Pointer.AddConsoleBox("ERROR-10: If syntax invalid"); // Inform user that there command is incorrect
+            Pointer.AddInvalidBox(command); // Add command to invalid list on screen
+        }
+    }
+    /// <summary>
+    /// Exception thrown when variable value is set to data type other than integer
+    /// </summary>
+    class VariableValueException : InternalException
+    {
+        public VariableValueException(string command)
+        {
+            Pointer.AddConsoleBox("ERROR-11: Variable value must be integer"); // Inform user that there command is incorrect
+            Pointer.AddInvalidBox(command); // Add command to invalid list on screen
+        }
+    }
+    /// <summary>
+    /// Exception thrown when an operation command does not contain enough arguments
+    /// </summary>
+    class OperationArgsException : InternalException
+    {
+        public OperationArgsException(string command)
+        {
+            Pointer.AddConsoleBox("ERROR-12: Incorrect amount of arguments"); // Inform user that there command is incorrect
+            Pointer.AddInvalidBox(command); // Add command to invalid list on screen
+        }
+    }
+    /// <summary>
+    /// Exception thrown when a method that doesn't exist is accessed
+    /// </summary>
+    class MethodNotFoundException : InternalException
+    {
+        public MethodNotFoundException(string command)
+        {
+            Pointer.AddConsoleBox("ERROR-13: No method could be found"); // Inform user that there command is incorrect
+            Pointer.AddInvalidBox(command); // Add command to invalid list on screen
+        }
+    }
+    /// <summary>
+    /// Exception thrown when an invalid operator is entered
+    /// </summary>
+    class InvalidOperatorException : InternalException
+    {
+        public InvalidOperatorException()
+        {
+            Pointer.AddConsoleBox("ERROR-14: Operator expected to modify variable"); // Inform user that there command is incorrect
         }
     }
 }

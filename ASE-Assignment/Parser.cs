@@ -25,7 +25,7 @@ namespace ASE_Assignment
             if (commandArray[0].Equals("method", StringComparison.InvariantCultureIgnoreCase) && (commandArray.Length == 2))
             {
                 Method m = FindMethod(commandArray[1]); // Find method
-                if(m == null) // If method not found
+                if (m == null) // If method not found
                 {
                     methodList.Add(new Method
                     {
@@ -65,57 +65,55 @@ namespace ASE_Assignment
         /// <returns>Syntax validity of var command</returns>
         public static bool IsVar(string command) // Checks to see if command is a VAR statement
         {
-            commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
-            if (commandArray[0].Equals("var", StringComparison.InvariantCultureIgnoreCase) && (commandArray.Length == 4)) // Check the syntax, [0] VAR, [1] LABEL,[2] equals, [3] VALUE
+            try
             {
-                Variable v = FindVar(commandArray[1]);
-                if (v != null) // See if variable already exists to overwrite
+                commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
+                if (commandArray[0].Equals("var", StringComparison.InvariantCultureIgnoreCase) && (commandArray.Length == 4)) // Check the syntax, [0] VAR, [1] LABEL,[2] equals, [3] VALUE
                 {
-                    if (int.TryParse(commandArray[3], out int result))
+                    Variable v = FindVar(commandArray[1]);
+                    if (v != null) // See if variable already exists to overwrite
                     {
-                        v.Value = result; // overwrite value
-                        Pointer.AddConsoleBox("Attempted to overwrite Variable: " + commandArray[1] + " with value: " + commandArray[3]); // Data logging
-                        return true;
-                    }
-                    else
-                    {
-                        Pointer.AddConsoleBox("ERROR-18: Variable value must be int.");
-                        Pointer.AddInvalidBox(command);
-                        return true;
-                    }
-                }
-                else // Create new variable if it doesnt exist
-                {
-                    if (int.TryParse(commandArray[3], out int result))
-                    {
-                        variableList.Add(new Variable
+                        if (int.TryParse(commandArray[3], out int result))
                         {
-                            Label = commandArray[1],
-                            Value = result
-                        }); // Add the new variable to the variable list
-                        Pointer.AddConsoleBox("Attempted to add Variable: " + commandArray[1] + " with value: " + commandArray[3]); // Data logging
-                        return true;
+                            v.Value = result; // overwrite value
+                            Pointer.AddConsoleBox("Attempted to overwrite Variable: " + commandArray[1] + " with value: " + commandArray[3]); // Data logging
+                            return true;
+                        }
+                        else
+                        {
+                            throw new VariableValueException(command);
+                        }
                     }
-                    else
+                    else // Create new variable if it doesnt exist
                     {
-                        Pointer.AddConsoleBox("ERROR-18: Variable value must be int.");
-                        Pointer.AddInvalidBox(command);
-                        return true;
+                        if (int.TryParse(commandArray[3], out int result))
+                        {
+                            variableList.Add(new Variable
+                            {
+                                Label = commandArray[1],
+                                Value = result
+                            }); // Add the new variable to the variable list
+                            Pointer.AddConsoleBox("Attempted to add Variable: " + commandArray[1] + " with value: " + commandArray[3]); // Data logging
+                            return true;
+                        }
+                        else
+                        {
+                            throw new VariableValueException(command); // Throw if value is not integer
+                        }
                     }
                 }
+                else if (commandArray[0].Equals("var", StringComparison.InvariantCultureIgnoreCase) && (commandArray.Length == 6)) // Check the syntax, [0] VAR, [1] LABEL, [2] equals, [3] VALUE, [4]OPERATOR, [5] NEW VALUE
+                {
+                    ModifyVar(command);
+                    return true;
+                }
+                else if (commandArray[0].Equals("var", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    throw new OperationArgsException(command); // throw if not enough arguments
+                }
+                else { return false; }
             }
-            else if (commandArray[0].Equals("var", StringComparison.InvariantCultureIgnoreCase) && (commandArray.Length == 6)) // Check the syntax, [0] VAR, [1] LABEL, [2] equals, [3] VALUE, [4]OPERATOR, [5] NEW VALUE
-            {
-                ModifyVar(command);
-                return true;
-            }
-            else if (commandArray[0].Equals("var", StringComparison.InvariantCultureIgnoreCase))
-            {
-                Pointer.AddConsoleBox("ERROR-19: Incorrect amount of arguments");
-                Pointer.AddInvalidBox(command);
-                return true;
-            }
-            else { return false; }
+            catch (InternalException) { return true; }
         }
 
         /// <summary>
@@ -125,24 +123,30 @@ namespace ASE_Assignment
         /// <returns>Syntax validity of runMethod command</returns>
         public static bool IsRunMethod(string command)
         {
-            commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
-            if (commandArray[0].Equals("runMethod", StringComparison.InvariantCultureIgnoreCase))
+            try
             {
-                Method m = FindMethod(commandArray[1]);
-                if(m != null)
+                commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
+                if (commandArray[0].Equals("runMethod", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    m.methodRun();
+                    Method m = FindMethod(commandArray[1]);
+                    if (m != null)
+                    {
+                        m.methodRun();
+                    }
+                    else
+                    {
+                        throw new MethodNotFoundException(command); // Throw if method does not exist
+                    }
+                    return true;
                 }
                 else
                 {
-                    Pointer.AddConsoleBox("ERROR-19: Method not found");
-                    Pointer.AddInvalidBox(command);
+                    return false;
                 }
-                return true;
             }
-            else
+            catch (InternalException)
             {
-                return false;
+                return true;
             }
         }
         /// <summary>
@@ -151,40 +155,42 @@ namespace ASE_Assignment
         /// <param name="command">The command entered</param>
         public static void ModifyVar(string command)
         {
-            commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
-            Variable modifiedVariable = FindVar(commandArray[1]);
-            Variable v2 = FindVar(commandArray[3]); // 2nd potential variable
-            Variable v3 = FindVar(commandArray[5]); // 3rd potential variable
-            if (modifiedVariable != null) // Ensure primary variable exists and value in an integer
+            try
             {
-                if (v2 != null) // check if argument 3 is a variable that has an integer value 
+                commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
+                Variable modifiedVariable = FindVar(commandArray[1]);
+                Variable v2 = FindVar(commandArray[3]); // 2nd potential variable
+                Variable v3 = FindVar(commandArray[5]); // 3rd potential variable
+                if (modifiedVariable != null) // Ensure primary variable exists and value in an integer
                 {
-                    if (v3 != null) // check if argument 5 is a variable with int value
+                    if (v2 != null) // check if argument 3 is a variable that has an integer value 
                     {
-                        ComplexModifyVar(v2.Value, v3.Value, modifiedVariable, commandArray[4]);
+                        if (v3 != null) // check if argument 5 is a variable with int value
+                        {
+                            ComplexModifyVar(v2.Value, v3.Value, modifiedVariable, commandArray[4]);
+                        }
+                        else
+                        {
+                            int.TryParse(commandArray[5], out int a5); // Check if argument is an int
+                            ComplexModifyVar(v2.Value, a5, modifiedVariable, commandArray[4]);
+                        }
+                    }
+                    else if (int.TryParse(commandArray[3], out int a3)) // argument 3 is not a variable so treat it as a number
+                    {
+                        int.TryParse(commandArray[5], out int a5); // Check if argument is an int
+                        ComplexModifyVar(a3, a5, modifiedVariable, commandArray[4]);
                     }
                     else
                     {
-                        int.TryParse(commandArray[5], out int a5); // Check if argument is an int
-                        ComplexModifyVar(v2.Value, a5, modifiedVariable, commandArray[4]);
+                        throw new NoSuchVariableException(command); // Throw if integer or variable is not found
                     }
-                }
-                else if (int.TryParse(commandArray[3], out int a3)) // argument 3 is not a variable so treat it as a number
-                {
-                    int.TryParse(commandArray[5], out int a5); // Check if argument is an int
-                    ComplexModifyVar(a3, a5, modifiedVariable, commandArray[4]);
                 }
                 else
                 {
-                    Pointer.AddConsoleBox("ERROR-16: Neither an integer or variable was given in arguments");
-                    Pointer.AddInvalidBox(command);
+                    throw new NoSuchVariableException(command); // Throw if integer or variable is not found
                 }
             }
-            else
-            {
-                Pointer.AddConsoleBox("ERROR-17: Variable must already be defined with an int parameter to be modified in this way."); // Data logging
-                Pointer.AddInvalidBox(command);
-            }
+            catch (InternalException) { };
         }
         /// <summary>
         /// Method for the modification of variables values with data passed from ModifyVar function
@@ -195,28 +201,31 @@ namespace ASE_Assignment
         /// <param name="op">Numerical operator to use in equation</param>
         public static void ComplexModifyVar(int v1, int v2, Variable v, string op)
         {
-            switch (op)
+            try
             {
-                case "+":
-                    v.Value = (v1 + v2);
-                    Pointer.AddConsoleBox("Attempted to modify Variable: " + commandArray[1] + " with value: " + v.Value); // Data logging
-                    break;
-                case "-":
-                    v.Value = (v1 - v2);
-                    Pointer.AddConsoleBox("Attempted to modify Variable: " + commandArray[1] + " with value: " + v.Value); // Data logging
-                    break;
-                case "/":
-                    v.Value = (v1 / v2);
-                    Pointer.AddConsoleBox("Attempted to modify Variable: " + commandArray[1] + " with value: " + v.Value); // Data logging
-                    break;
-                case "*":
-                    v.Value = (v1 * v2);
-                    Pointer.AddConsoleBox("Attempted to modify Variable: " + commandArray[1] + " with value: " + v.Value); // Data logging
-                    break;
-                default:
-                    Pointer.AddConsoleBox("ERROR-15: Operator expected to modify variable");
-                    break;
+                switch (op)
+                {
+                    case "+":
+                        v.Value = (v1 + v2);
+                        Pointer.AddConsoleBox("Attempted to modify Variable: " + commandArray[1] + " with value: " + v.Value); // Data logging
+                        break;
+                    case "-":
+                        v.Value = (v1 - v2);
+                        Pointer.AddConsoleBox("Attempted to modify Variable: " + commandArray[1] + " with value: " + v.Value); // Data logging
+                        break;
+                    case "/":
+                        v.Value = (v1 / v2);
+                        Pointer.AddConsoleBox("Attempted to modify Variable: " + commandArray[1] + " with value: " + v.Value); // Data logging
+                        break;
+                    case "*":
+                        v.Value = (v1 * v2);
+                        Pointer.AddConsoleBox("Attempted to modify Variable: " + commandArray[1] + " with value: " + v.Value); // Data logging
+                        break;
+                    default:
+                        throw new InvalidOperatorException();
+                }
             }
+            catch (InternalException) { }
         }
         /// <summary>
         /// Method for finding existing variable from variableList
@@ -229,7 +238,7 @@ namespace ASE_Assignment
             {
                 if (v.Label.Equals(s, StringComparison.InvariantCultureIgnoreCase)) // Check if var already exists
                 {
-                    return v; 
+                    return v;
                 }
             }
             return null;
@@ -258,21 +267,23 @@ namespace ASE_Assignment
         /// <returns>Syntax validity of loop command</returns>
         public static bool IsLoop(string command) // Checks to see if command is a LOOP statement
         {
-            commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
-            if (commandArray[0].Equals("loop", StringComparison.InvariantCultureIgnoreCase)) // check syntax [0] loop, [1] var/value, [2] operator, [3] var/value
+            try
             {
-                if (commandArray.Length == 4)
+                commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
+                if (commandArray[0].Equals("loop", StringComparison.InvariantCultureIgnoreCase)) // check syntax [0] loop, [1] var/value, [2] operator, [3] var/value
                 {
-                    return true;
+                    if (commandArray.Length == 4)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        throw new OperationArgsException(command);
+                    }
                 }
-                else
-                {
-                    Pointer.AddConsoleBox("ERROR-19: Incorrect amount of arguments");
-                    Pointer.AddInvalidBox(command);
-                    return true;
-                }
+                else { return false; }
             }
-            else { return false; }
+            catch (InternalException) { return true; }
         }
         /// <summary>
         /// Checks for end command
@@ -346,7 +357,7 @@ namespace ASE_Assignment
                 return true;
             }
 
-            else if(v != null)
+            else if (v != null)
             {
                 result = v.Value;
                 return true;
