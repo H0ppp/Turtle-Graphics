@@ -10,7 +10,33 @@ namespace ASE_Assignment
     {
         static string[] commandArray; // Array of command pieces
         public static List<Variable> variableList = new List<Variable>(); // List of all variables assigned in current runtime
+        public static List<Method> methodList = new List<Method>();
 
+
+        public static bool IsMethod(string command, out string methodName)
+        {
+            commandArray = command.Split(" ");
+
+            if (commandArray[0].Equals("method", StringComparison.InvariantCultureIgnoreCase) && (commandArray.Length == 2))
+            {
+                Method m = FindMethod(commandArray[1]);
+                if(m == null)
+                {
+                    methodList.Add(new Method
+                    {
+                        Label = commandArray[1],
+                    }); // Add the new method to the method list
+                    Pointer.AddConsoleBox("Created new method: " + commandArray[1]); // Data logging
+                }
+                methodName = commandArray[1];
+                return true;
+            }
+            else
+            {
+                methodName = null;
+                return false;
+            }
+        }
         public static bool IsIf(string command) // Checks to see if command is an IF statement
         {
             commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
@@ -74,6 +100,29 @@ namespace ASE_Assignment
                 return true;
             }
             else { return false; }
+        }
+
+        public static bool IsRunMethod(string command)
+        {
+            commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
+            if (commandArray[0].Equals("runMethod", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Method m = FindMethod(commandArray[1]);
+                if(m != null)
+                {
+                    m.methodRun();
+                }
+                else
+                {
+                    Pointer.AddConsoleBox("ERROR-19: Method not found");
+                    Pointer.addInvalidBox(command);
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public static void ModifyVar(string command)
@@ -152,6 +201,19 @@ namespace ASE_Assignment
             return null;
         }
 
+
+        public static Method FindMethod(string s) // Find a variable with the given label to determine if it exists
+        {
+            foreach (Method m in methodList)
+            {
+                if (m.Label.Equals(s, StringComparison.InvariantCultureIgnoreCase)) // Check if var already exists
+                {
+                    return m;
+                }
+            }
+            return null;
+        }
+
         public static bool IsLoop(string command) // Checks to see if command is a LOOP statement
         {
             commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
@@ -171,19 +233,43 @@ namespace ASE_Assignment
             else { return false; }
         }
 
-        public static bool IsEnd(string command)
+        public static bool IsEndIf(string command)
         {
             commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
-            if (commandArray[0].Equals("end", StringComparison.InvariantCultureIgnoreCase)) // check syntax
+            if (commandArray[0].Equals("endif", StringComparison.InvariantCultureIgnoreCase)) // check syntax
+            {
+                return true;
+            }
+            else { return false; }
+        }
+        public static bool IsEndLoop(string command)
+        {
+            commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
+            if (commandArray[0].Equals("endloop", StringComparison.InvariantCultureIgnoreCase)) // check syntax
+            {
+                return true;
+            }
+            else { return false; }
+        }
+        public static bool IsEndMethod(string command)
+        {
+            commandArray = command.Split(" "); // Split the command entered into parts to determine args given.
+            if (commandArray[0].Equals("endmethod", StringComparison.InvariantCultureIgnoreCase)) // check syntax
             {
                 return true;
             }
             else { return false; }
         }
 
+
         public static void ClearVar()
         {
             variableList.Clear();
+        }
+
+        public static void ClearMethods()
+        {
+            methodList.Clear();
         }
 
         public static bool checkVarInt(String argument, out Int32 result)

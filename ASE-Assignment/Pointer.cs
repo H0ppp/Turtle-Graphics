@@ -154,7 +154,7 @@ namespace ASE_Assignment
                 {
                     if (Parser.checkVarInt(commandArray[1], out int newx) && Parser.checkVarInt(commandArray[2], out int newy))
                     { //See if arg given for X is valid integer
-                        Draw(newx, newy.g); // BOTH INTS
+                        Draw(newx, newy,g); // BOTH INTS
                     }
                     else
                     {
@@ -216,7 +216,7 @@ namespace ASE_Assignment
 
         public static void ClearInvalidBox()
         {
-            consoleBox.Text = "Invalid Commands: \r\n ";
+            label.Text = "Invalid Commands: \r\n ";
         }
     }
 }

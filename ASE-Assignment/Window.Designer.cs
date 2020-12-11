@@ -43,6 +43,7 @@ namespace ASE_Assignment
             this.menuQuit = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.turtle = new System.Windows.Forms.PictureBox();
+            this.clearMethod = new System.Windows.Forms.Button();
             this.clearVars = new System.Windows.Forms.Button();
             this.clearButton = new System.Windows.Forms.Button();
             this.executeButton = new System.Windows.Forms.Button();
@@ -53,6 +54,7 @@ namespace ASE_Assignment
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.consoleBox = new System.Windows.Forms.TextBox();
+            this.clearScreen = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -120,6 +122,8 @@ namespace ASE_Assignment
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.clearScreen);
+            this.splitContainer1.Panel2.Controls.Add(this.clearMethod);
             this.splitContainer1.Panel2.Controls.Add(this.clearVars);
             this.splitContainer1.Panel2.Controls.Add(this.clearButton);
             this.splitContainer1.Panel2.Controls.Add(this.executeButton);
@@ -127,6 +131,7 @@ namespace ASE_Assignment
             this.splitContainer1.Panel2.Controls.Add(this.commandBox);
             this.splitContainer1.Panel2.Controls.Add(this.button2);
             this.splitContainer1.Panel2.Controls.Add(this.textBox1);
+            this.splitContainer1.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel2_Paint);
             this.splitContainer1.Panel2MinSize = 20;
             this.splitContainer1.Size = new System.Drawing.Size(850, 730);
             this.splitContainer1.SplitterDistance = 500;
@@ -146,10 +151,21 @@ namespace ASE_Assignment
             this.turtle.TabIndex = 0;
             this.turtle.TabStop = false;
             // 
+            // clearMethod
+            // 
+            this.clearMethod.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.clearMethod.Location = new System.Drawing.Point(373, 145);
+            this.clearMethod.Name = "clearMethod";
+            this.clearMethod.Size = new System.Drawing.Size(113, 23);
+            this.clearMethod.TabIndex = 7;
+            this.clearMethod.Text = "Clear Methods";
+            this.clearMethod.UseVisualStyleBackColor = true;
+            this.clearMethod.Click += new System.EventHandler(this.clearMethod_Click);
+            // 
             // clearVars
             // 
             this.clearVars.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.clearVars.Location = new System.Drawing.Point(373, 174);
+            this.clearVars.Location = new System.Drawing.Point(373, 116);
             this.clearVars.Name = "clearVars";
             this.clearVars.Size = new System.Drawing.Size(113, 23);
             this.clearVars.TabIndex = 6;
@@ -160,7 +176,7 @@ namespace ASE_Assignment
             // clearButton
             // 
             this.clearButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.clearButton.Location = new System.Drawing.Point(373, 145);
+            this.clearButton.Location = new System.Drawing.Point(373, 87);
             this.clearButton.Name = "clearButton";
             this.clearButton.Size = new System.Drawing.Size(113, 23);
             this.clearButton.TabIndex = 5;
@@ -171,7 +187,7 @@ namespace ASE_Assignment
             // executeButton
             // 
             this.executeButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.executeButton.Location = new System.Drawing.Point(373, 116);
+            this.executeButton.Location = new System.Drawing.Point(373, 58);
             this.executeButton.Name = "executeButton";
             this.executeButton.Size = new System.Drawing.Size(113, 23);
             this.executeButton.TabIndex = 4;
@@ -238,6 +254,17 @@ namespace ASE_Assignment
             this.consoleBox.TabIndex = 2;
             this.consoleBox.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
+            // clearScreen
+            // 
+            this.clearScreen.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.clearScreen.Location = new System.Drawing.Point(373, 174);
+            this.clearScreen.Name = "clearScreen";
+            this.clearScreen.Size = new System.Drawing.Size(113, 23);
+            this.clearScreen.TabIndex = 8;
+            this.clearScreen.Text = "Clear Screen";
+            this.clearScreen.UseVisualStyleBackColor = true;
+            this.clearScreen.Click += new System.EventHandler(this.clearScreen_Click);
+            // 
             // Window
             // 
             this.AcceptButton = this.button2;
@@ -285,6 +312,8 @@ namespace ASE_Assignment
         private Button executeButton;
         private TextBox consoleBox;
         private Button clearVars;
+        private Button clearMethod;
+        private Button clearScreen;
     }
 }
 

@@ -23,8 +23,9 @@ namespace ASE_Assignment
         public List<Command> commands = new List<Command>();
         public static List<Command> ifCommands = new List<Command>();
         public static List<Command> loopCommands = new List<Command>();
+        public static List<Command> methodCommands = new List<Command>();
         String[] commandArray;
-        string ifLine, loopLine;
+        string ifLine, loopLine, currentMethod;
         public Window()
         {
             SetStyle(ControlStyles.SupportsTransparentBackColor, true); // Allow transparent backgrounds
@@ -69,13 +70,49 @@ namespace ASE_Assignment
         /// </summary>
         public void Execute()
         {
+            Pointer.ClearInvalidBox();
             Pointer.ClearConsoleBox();
             Pointer.AddConsoleBox("PROGRAM RAN");
             Boolean ifEnabled = false; // Check to see if the commands are encapsulated by an if statement
             Boolean loopEnabled = false;
+            Boolean methodEnabled = false;
             for (int i = 0; i < commands.Count; i++) // Iterate through command list
             {
-                if (ifEnabled && (Parser.IsEnd(commands[i].line) == false)) // check if command is encapsulated in if statement
+                // METHOD PARSING
+                if (methodEnabled && (Parser.IsEndMethod(commands[i].line) == false))
+                {
+                    operationChecker(commands[i]);
+                    methodCommands.Add(commands[i]);
+                    Pointer.AddConsoleBox("Method command added: " + commands[i].line);
+                }
+                else if (Parser.IsMethod(commands[i].line, out string methodName))
+                {
+                    Pointer.AddConsoleBox("Method Began");
+                    methodEnabled = true;
+                    currentMethod = methodName;
+                    commands[i].operation = true;
+                }
+                else if (methodEnabled && Parser.IsEndMethod(commands[i].line))
+                {
+                    methodEnabled = false;
+                    foreach (Method m in Parser.methodList)
+                    {
+                        if (m.Label.Equals(currentMethod, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            m.Commands = methodCommands;
+                        }
+                    }
+                    Pointer.AddConsoleBox("Method ended"); // data logging
+                }
+
+                // METHOD RUNNING PARSING
+                else if (Parser.IsRunMethod(commands[i].line))
+                {
+                    Pointer.AddConsoleBox("Method Ran"); // data logging
+                }
+
+                // IF PARSING
+                else if (ifEnabled && (Parser.IsEndIf(commands[i].line) == false)) // check if command is encapsulated in if statement
                 {
                     operationChecker(commands[i]); // Check if command is operation or not
                     ifCommands.Add(commands[i]); // add to list of commands in if statement
@@ -88,13 +125,16 @@ namespace ASE_Assignment
                     ifLine = commands[i].line; // Save the line for the syntax checking
                     commands[i].operation = true;
                 }
-                else if (ifEnabled && Parser.IsEnd(commands[i].line)) // Check if reached end of if statement
+                else if (ifEnabled && Parser.IsEndIf(commands[i].line)) // Check if reached end of if statement
                 {
                     ifEnabled = false; // disable encapsulation
                     Pointer.AddConsoleBox("IF finished"); // data logging
                     ifChecker(ifLine); // Run ifChecker method to check syntax and outcome of IF statement
                 }
-                else if (loopEnabled && (Parser.IsEnd(commands[i].line) == false)) // check if command is encapsulated in loop statement
+
+
+                // LOOP PARSING
+                else if (loopEnabled && (Parser.IsEndLoop(commands[i].line) == false)) // check if command is encapsulated in loop statement
                 {
                     operationChecker(commands[i]); // Check if command is operation or not
                     loopCommands.Add(commands[i]); // add to list of commands in if statement
@@ -107,15 +147,17 @@ namespace ASE_Assignment
                     loopLine = commands[i].line; // Save the line for the syntax checking
                     commands[i].operation = true;
                 }
-                else if (Parser.IsVar(commands[i].line))
-                {
-                    commands[i].operation = true;
-                }
-                else if (loopEnabled && Parser.IsEnd(commands[i].line)) // Check if reached end of loop statement
+                else if (loopEnabled && Parser.IsEndLoop(commands[i].line)) // Check if reached end of loop statement
                 {
                     loopEnabled = false; // disable encapsulation
                     Pointer.AddConsoleBox("loop finished"); // data logging
                     Looper.LoopChecker(loopLine); // Run ifChecker method to check syntax and outcome of loop statement
+                }
+
+                // VAR PARSING
+                else if (Parser.IsVar(commands[i].line))
+                {
+                    commands[i].operation = true;
                 }
                 else
                 {
@@ -135,7 +177,7 @@ namespace ASE_Assignment
                 c.operation = true;
             }
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -191,7 +233,9 @@ namespace ASE_Assignment
                         {
                             Parser.IsVar(i.line); // check type
                             Parser.IsLoop(i.line);
-                            Parser.IsEnd(i.line);
+                            Parser.IsEndIf(i.line);
+                            Parser.IsEndLoop(i.line);
+                            Parser.IsEndMethod(i.line);
                         }
                         else
                         {
@@ -211,7 +255,9 @@ namespace ASE_Assignment
                         {
                             Parser.IsVar(i.line); // check type
                             Parser.IsLoop(i.line);
-                            Parser.IsEnd(i.line);
+                            Parser.IsEndIf(i.line);
+                            Parser.IsEndLoop(i.line);
+                            Parser.IsEndMethod(i.line);
                         }
                         else
                         {
@@ -231,7 +277,9 @@ namespace ASE_Assignment
                         {
                             Parser.IsVar(i.line); // check type
                             Parser.IsLoop(i.line);
-                            Parser.IsEnd(i.line);
+                            Parser.IsEndIf(i.line);
+                            Parser.IsEndLoop(i.line);
+                            Parser.IsEndMethod(i.line);
                         }
                         else
                         {
@@ -251,7 +299,9 @@ namespace ASE_Assignment
                         {
                             Parser.IsVar(i.line); // check type
                             Parser.IsLoop(i.line);
-                            Parser.IsEnd(i.line);
+                            Parser.IsEndIf(i.line);
+                            Parser.IsEndLoop(i.line);
+                            Parser.IsEndMethod(i.line);
                         }
                         else
                         {
@@ -275,7 +325,13 @@ namespace ASE_Assignment
         {
             openFileDialog1.ShowDialog(); // Start the file opener
             List<string> commandstring = new List<string>();
-            commandstring = File.ReadAllLines(Path.GetFullPath(openFileDialog1.FileName)).ToList(); // Add each line of the .txt to the commands list
+            try { 
+                commandstring = File.ReadAllLines(Path.GetFullPath(openFileDialog1.FileName)).ToList(); // Add each line of the .txt to the commands list
+            }
+            catch (FileNotFoundException)
+            {
+                Pointer.AddConsoleBox("ERROR-20: Invalid file path"); // Post error to console
+            }
             foreach (string s in commandstring)
             {
                 commands.Add(new Command
@@ -299,7 +355,14 @@ namespace ASE_Assignment
                 commandstring.Add(c.line);
             }
             saveFileDialog1.ShowDialog(); // Start the file saver
-            System.IO.File.WriteAllLines(Path.GetFullPath(saveFileDialog1.FileName), commandstring); // Write all the commands in the list into individual lines in the txt.
+            try 
+            {
+                System.IO.File.WriteAllLines(Path.GetFullPath(saveFileDialog1.FileName), commandstring); // Write all the commands in the list into individual lines in the txt.
+            }
+            catch (FileNotFoundException)
+            {
+                Pointer.AddConsoleBox("ERROR-20: Invalid file path"); // Post error to console
+            }
         }
         private void quitButton_Clicked(object sender, EventArgs e) // QUIT BUTTON PRESSED
         {
@@ -316,12 +379,30 @@ namespace ASE_Assignment
             commands.Clear(); // Empty the Commands list
             ifCommands.Clear();
             loopCommands.Clear();
+            methodCommands.Clear();
             SetCommands("Commands:"); // Reset textbox
             Pointer.ClearInvalidBox(); // Reset command box
+            Pointer.ClearConsoleBox(); // Clear console box
         }
 
         private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
         {
+        }
+
+        private void clearMethod_Click(object sender, EventArgs e)
+        {
+            Pointer.AddConsoleBox("All Methods Cleared");
+        }
+
+        private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void clearScreen_Click(object sender, EventArgs e)
+        {
+            g.Clear(Color.White);
+            Pointer.AddConsoleBox("Screen Cleared");
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)

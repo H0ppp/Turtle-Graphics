@@ -171,13 +171,13 @@ namespace ASE_Assignment
         {
             foreach (Command i in Window.loopCommands) // iterate through encapsulated commands
             {
-                Console.WriteLine(i.line);
                 if (i.operation) // if command is an operational command
                 {
                     Parser.IsVar(i.line); // check type
-                    Console.WriteLine(1);
                     Parser.IsLoop(i.line);
-                    Parser.IsEnd(i.line);
+                    Parser.IsEndIf(i.line);
+                    Parser.IsEndLoop(i.line);
+                    Parser.IsEndMethod(i.line);
                 }
                 else
                 {
