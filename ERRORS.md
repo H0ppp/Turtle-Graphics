@@ -4,42 +4,36 @@
 
 ERROR-01: One or more triangle co-ordinates given were not valid numbers
 
-ERROR-02: Invalid argument, expected a number for rectangle height
+ERROR-02: Invalid argument, expected a number or variable for rectangle dimension
 
-ERROR-03: Invalid argument, expected a number for rectangle width
+ERROR-03: Invalid argument, expected on/off for fill.
 
-ERROR-04: Invalid argument, expected on/off for fill.
-
-ERROR-05: Invalid argument, expected a number or variable for circle radius
+ERROR-04: Invalid argument, expected a number or variable for circle radius
 
 ## Movement Errors:
 
-ERROR-06: Invalid argument, expected a number for move to y co-ord.
+ERROR-05: Invalid argument, expected a number for move to x/y co-ord
 
-ERROR-07: Invalid argument, expected a number for move to x co-ord
-
-ERROR-08: Invalid argument, expected a number for draw to y co-ord
-
-ERROR-09: Invalid argument, expected a number for draw to x co-ord
+ERROR-06: Invalid argument, expected a number for draw to x/y co-ord
 
 ## Syntax/Variable Errors:
 
-ERROR-10: Invalid command!
+ERROR-07: Invalid command!
 
-ERROR-11: Not enough arguments were given
+ERROR-08: Not enough arguments were given
 
-ERROR-12: Value of variable cannot be defined as a number
+ERROR-09: No such variable could be found
 
-ERROR-13: No such variable could be found.
+ERROR-10: If syntax invalid
 
-ERROR-14: If syntax invalid
+ERROR-11: Variable value must be integer
 
-ERROR-15: Operator expected to modify variable
+ERROR-12: Incorrect amount of arguments for var command
 
-ERROR-16: Neither an integer or variable was given in arguments
+ERROR-13: No method could be found
 
-ERROR-17: Variable must already be defined with an int parameter to be modified in this way.
+ERROR-14: Operator expected to modify variable
 
-ERROR-18: Variable value must be int.
+## File Errors:
 
-ERROR-19: Incorrect amount of arguments
+ERROR-15: Invalid File Path.
