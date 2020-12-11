@@ -392,7 +392,6 @@ namespace ASE_Assignment
             commands.Clear(); // Empty the Commands lists
             ifCommands.Clear();
             loopCommands.Clear();
-            methodCommands.Clear();
             SetCommands("Commands:"); // Reset textbox
             Pointer.ClearInvalidBox(); // Reset command box
             Pointer.ClearConsoleBox(); // Clear console box

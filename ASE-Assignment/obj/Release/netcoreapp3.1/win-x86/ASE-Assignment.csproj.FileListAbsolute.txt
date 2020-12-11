@@ -218,7 +218,6 @@ C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\bin\Release\netcoreapp3
 C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\bin\Release\netcoreapp3.1\win-x86\hostfxr.dll
 C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\bin\Release\netcoreapp3.1\win-x86\hostpolicy.dll
 C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\bin\Release\netcoreapp3.1\win-x86\mscordaccore.dll
-C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\bin\Release\netcoreapp3.1\win-x86\mscordaccore_x86_x86_4.700.20.47201.dll
 C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\bin\Release\netcoreapp3.1\win-x86\mscordbi.dll
 C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\bin\Release\netcoreapp3.1\win-x86\mscorrc.debug.dll
 C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\bin\Release\netcoreapp3.1\win-x86\mscorrc.dll
@@ -508,3 +507,4 @@ C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\obj\Release\netcoreapp3
 C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\obj\Release\netcoreapp3.1\win-x86\ASE-Assignment.dll
 C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\obj\Release\netcoreapp3.1\win-x86\ASE-Assignment.pdb
 C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\obj\Release\netcoreapp3.1\win-x86\ASE-Assignment.genruntimeconfig.cache
+C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\bin\Release\netcoreapp3.1\win-x86\mscordaccore_x86_x86_4.700.20.51601.dll

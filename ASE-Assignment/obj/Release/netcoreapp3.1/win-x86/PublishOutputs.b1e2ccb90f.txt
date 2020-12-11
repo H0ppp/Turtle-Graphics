@@ -1,0 +1,2 @@
+C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\bin\Release\netcoreapp3.1\publish\ASE-Assignment.pdb
+C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\bin\Release\netcoreapp3.1\publish\ASE-Assignment.exe
