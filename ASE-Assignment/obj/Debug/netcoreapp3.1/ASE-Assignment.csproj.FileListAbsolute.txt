@@ -13,3 +13,4 @@ C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\obj\Debug\netcoreapp3.1
 C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\obj\Debug\netcoreapp3.1\ASE-Assignment.pdb
 C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\obj\Debug\netcoreapp3.1\ASE-Assignment.genruntimeconfig.cache
 C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\obj\Debug\netcoreapp3.1\ASE_Assignment.Window.resources
+C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment\bin\Debug\netcoreapp3.1\ASE-Assignment.xml

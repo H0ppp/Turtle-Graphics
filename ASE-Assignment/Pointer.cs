@@ -11,11 +11,17 @@ namespace ASE_Assignment
     /// </summary>
     public class Pointer
     {
+        /// <summary>
+        /// The invalid command box in the window.
+        /// </summary>
+        public static Label invalidBox;
+        /// <summary>
+        /// The console box object in the window.
+        /// </summary>
+        public static TextBox consoleBox;
         static Graphics g;
         static PictureBox p;
         static Pen pen;
-        public static Label label;
-        public static TextBox consoleBox;
         static Color penColour = Color.Black;
         static Color shapeColour = Color.Red;
         static bool fill = true;
@@ -29,7 +35,7 @@ namespace ASE_Assignment
         public static void Init(PictureBox picture, Graphics graphics, Label invalid, TextBox cb) //Initial assignment of external objects to allow interaction
         {
             p = picture; // Assign the turtle object.
-            label = invalid; // Label is the invalid command box
+            invalidBox = invalid; // Label is the invalid command box
             consoleBox = cb;
             pen = new Pen(penColour); // Set default pen colour
             g = graphics; // Graphics controller from split container (The drawing area)
@@ -38,7 +44,7 @@ namespace ASE_Assignment
         /// Function for parsing commands through the pointer.
         /// </summary>
         /// <param name="command">The command to parse.</param>
-        public static void Instruct(String command)  // Parse the commands given
+        public static void Instruct(String command)
         {
             String[] commandArray; // The array to store the parts of the command
             AddConsoleBox(command); // Print to console for logging
@@ -166,11 +172,11 @@ namespace ASE_Assignment
             p.Invalidate();
         }
         /// <summary>
-        /// Move the pointer to the given co-ord
+        /// Move the turtle to the given X and Y coordinate
         /// </summary>
         /// <param name="x">X Position</param>
         /// <param name="y">Y Position</param>
-        static void Move(int x, int y) // Move the turtle to the given X & Y coordinate
+        static void Move(int x, int y)
         {
             p.Location = new System.Drawing.Point(x, y); // Assign turtles location to new point
         }
@@ -180,7 +186,7 @@ namespace ASE_Assignment
         /// <param name="x">X Postion</param>
         /// <param name="y">Y Position</param>
         /// <param name="g">Graphics panel to draw the line on</param>
-        static void Draw(int x, int y, Graphics g) // Draw a line between the current and new positions
+        static void Draw(int x, int y, Graphics g)
         {
             Point original = new Point(p.Location.X + (p.Width / 2), p.Location.Y + (p.Height / 2)); // Determine the centre of the Turtle to draw from
             Point next = new Point(x + (p.Width / 2), y + (p.Height / 2)); // Determine where the centre will be at the new point
@@ -208,14 +214,14 @@ namespace ASE_Assignment
         /// <param name="line">The line to add to the text box</param>
         public static void AddInvalidBox(string line)
         {
-            label.Text = label.Text + "\r\n" + line;
+            invalidBox.Text = invalidBox.Text + "\r\n" + line;
         }
         /// <summary>
         /// Clears the invalid command box
         /// </summary>
         public static void ClearInvalidBox()
         {
-            label.Text = "Invalid Commands: \r\n ";
+            invalidBox.Text = "Invalid Commands: \r\n ";
         }
     }
 }

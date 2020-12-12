@@ -95,3 +95,4 @@ C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment-Testing\obj\Debug\netco
 C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment-Testing\obj\Debug\netcoreapp3.1\ASE-Assignment-Testing.dll
 C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment-Testing\obj\Debug\netcoreapp3.1\ASE-Assignment-Testing.pdb
 C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment-Testing\obj\Debug\netcoreapp3.1\ASE-Assignment-Testing.genruntimeconfig.cache
+C:\Users\Jake\Source\Repos\ASE-Assignment\ASE-Assignment-Testing\bin\Debug\netcoreapp3.1\ASE-Assignment.xml

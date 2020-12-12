@@ -19,10 +19,25 @@ namespace ASE_Assignment
     /// </summary>
     public partial class Window : Form
     {
+        /// <summary>
+        /// The graphics panel that the pointer draws onto.
+        /// </summary>
         public Graphics g;
+        /// <summary>
+        /// The list of all commands entered
+        /// </summary>
         public List<Command> commands = new List<Command>();
+        /// <summary>
+        /// The list of all commands encapsulated in the current IF statement
+        /// </summary>
         public static List<Command> ifCommands = new List<Command>();
+        /// <summary>
+        /// The list of all commands encapsulated in the current loop statement
+        /// </summary>
         public static List<Command> loopCommands = new List<Command>();
+        /// <summary>
+        /// The list of all commands encapsulated in the current method statement
+        /// </summary>
         public static List<Command> methodCommands = new List<Command>();
         String[] commandArray;
         string ifLine, loopLine, currentMethod;

@@ -207,19 +207,19 @@ namespace ASE_Assignment
                 {
                     case "+":
                         v.Value = (v1 + v2);
-                        Pointer.AddConsoleBox("Attempted to modify Variable: " + commandArray[1] + " with value: " + v.Value); // Data logging
+                        Pointer.AddConsoleBox("Attempted to modify Variable: " + v.Label + " with value: " + v.Value); // Data logging
                         break;
                     case "-":
                         v.Value = (v1 - v2);
-                        Pointer.AddConsoleBox("Attempted to modify Variable: " + commandArray[1] + " with value: " + v.Value); // Data logging
+                        Pointer.AddConsoleBox("Attempted to modify Variable: " + v.Label + " with value: " + v.Value); // Data logging
                         break;
                     case "/":
                         v.Value = (v1 / v2);
-                        Pointer.AddConsoleBox("Attempted to modify Variable: " + commandArray[1] + " with value: " + v.Value); // Data logging
+                        Pointer.AddConsoleBox("Attempted to modify Variable: " + v.Label + " with value: " + v.Value); // Data logging
                         break;
                     case "*":
                         v.Value = (v1 * v2);
-                        Pointer.AddConsoleBox("Attempted to modify Variable: " + commandArray[1] + " with value: " + v.Value); // Data logging
+                        Pointer.AddConsoleBox("Attempted to modify Variable: " + v.Label + " with value: " + v.Value); // Data logging
                         break;
                     default:
                         throw new InvalidOperatorException();
